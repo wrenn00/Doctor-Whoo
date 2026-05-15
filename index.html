@@ -3,16 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>닥터후 팡팡 - 맞팔해주세요!</title>
-  <meta name="description" content="닥터후님 팡팡! 맞팔맞팔 아자스!! 💖" />
+  <title>닥터후 팡팡 @13doctorwhooo - 맞팔해주세요!</title>
+  <meta name="description" content="@13doctorwhooo 닥터후님 궁디팡팡! 맞팔맞팔 아자스!! 💖" />
   <meta name="theme-color" content="#f91880" />
   <meta property="og:type"        content="website" />
-  <meta property="og:title"       content="닥터후 팡팡 - 맞팔해주세요! 💖" />
-  <meta property="og:description" content="닥터후님 팡팡! 잘했어요 / 혼내기 모드로 응원해요 😡" />
+  <meta property="og:title"       content="닥터후 팡팡 - @13doctorwhooo 맞팔해주세요! 💖" />
+  <meta property="og:description" content="@13doctorwhooo 님을 팡팡! 잘했어요 / 혼내기 모드로 응원해요 😡" />
   <meta property="og:image"       content="hoo.png" />
   <meta name="twitter:card"        content="summary_large_image" />
-  <meta name="twitter:title"       content="닥터후 팡팡 - 맞팔해주세요! 💖" />
-  <meta name="twitter:description" content="닥터후님 팡팡! 맞팔맞팔 아자스!!" />
+  <meta name="twitter:title"       content="닥터후 팡팡 - @13doctorwhooo 맞팔해주세요!" />
+  <meta name="twitter:description" content="@13doctorwhooo 님을 팡팡! 맞팔맞팔 아자스!!" />
   <meta name="twitter:image"       content="hoo.png" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
 
@@ -83,6 +83,8 @@
     .profile-handle {
       font-size: .82rem; color: var(--sub); margin-top: 1px;
     }
+    .profile-handle a { color: var(--sub); text-decoration: none; }
+    .profile-handle a:hover { color: var(--accent); text-decoration: underline; }
     .profile-stats {
       display: flex; gap: 16px; margin-top: 8px;
     }
@@ -563,7 +565,7 @@
     </div>
     <div class="profile-info">
       <div class="profile-name">닥터후</div>
-      <div class="profile-handle">@doctorhoo</div>
+      <div class="profile-handle"><a href="https://www.instagram.com/13doctorwhooo/" target="_blank">@13doctorwhooo</a></div>
       <div class="profile-stats">
         <div class="profile-stat"><strong>999K</strong> 팔로워</div>
         <div class="profile-stat"><strong>0</strong> 맞팔</div>
@@ -610,7 +612,7 @@
           <div class="post-avatar">
             <img src="hoo.png" alt="" onerror="this.style.display='none';this.parentElement.textContent='🩺'" />
           </div>
-          <div class="post-handle">닥터후 <span>@doctorhoo</span></div>
+          <div class="post-handle">닥터후 <span>@13doctorwhooo</span></div>
         </div>
 
         <!-- Gauge inside card, above image -->
@@ -654,13 +656,13 @@
       </div>
 
       <div class="editor-panel active" id="panel-praise">
-        <p class="panel-hint">닥터후를 칭찬할 때 랜덤으로 나올 메시지예요 ✨</p>
+        <p class="panel-hint"><a href="https://www.instagram.com/13doctorwhooo/" target="_blank" style="color:#f91880;font-weight:500;">@13doctorwhooo</a> 를 칭찬할 때 랜덤으로 나올 메시지예요 ✨</p>
         <div class="msg-list" id="list-praise"></div>
         <button class="btn-add-msg" data-target="praise">➕ 메시지 추가하기</button>
       </div>
 
       <div class="editor-panel" id="panel-angry">
-        <p class="panel-hint">혼낼 때 랜덤으로 나올 메시지예요 🔥</p>
+        <p class="panel-hint"><a href="https://www.instagram.com/13doctorwhooo/" target="_blank" style="color:#f91880;font-weight:500;">@13doctorwhooo</a> 를 혼낼 때 랜덤으로 나올 메시지예요 🔥</p>
         <div class="msg-list" id="list-angry"></div>
         <button class="btn-add-msg" data-target="angry">➕ 메시지 추가하기</button>
       </div>
@@ -671,6 +673,12 @@
       </div>
     </div>
   </div>
+
+  <footer style="text-align:center;padding:24px 16px;font-size:12px;color:#999;margin-top:32px;">
+    💖 made with love for
+    <a href="https://www.instagram.com/13doctorwhooo/" target="_blank"
+       style="color:#f91880;text-decoration:none;font-weight:500;">@13doctorwhooo</a>
+  </footer>
 
   <div class="floating-emojis" id="floatingEmojis"></div>
   <div class="flash" id="flash"></div>
@@ -1011,7 +1019,7 @@
       header.appendChild(num); header.appendChild(del);
       const input = document.createElement('input');
       input.type = 'text'; input.value = value;
-      input.placeholder = '예: 닥터후님 맞팔해주세여';
+      input.placeholder = '예: @13doctorwhooo 님 맞팔해주세여';
       card.appendChild(header); card.appendChild(input);
       listEl.appendChild(card);
       renumberList(listEl);
