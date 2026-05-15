@@ -311,6 +311,24 @@
     .reset-btn:hover { background:#ffe8f4; transform:translateY(-2px); box-shadow:0 4px 16px rgba(210,100,140,.2); }
 
     /* ── Message editor ───────────────────────────── */
+
+    /* CSS 변수: 탭 모드별 색상 정의 */
+    .editor-body { --c-card-bg:#fff0f3; --c-card-border:#ffb6c1;
+      --c-num:#ff6b9d; --c-input-border:#ffb6c1; --c-input-focus:#ff6b9d;
+      --c-del-hover:#ff6b9d; --c-del-bg:#ffe8f0;
+      --c-add-border:#ffb6c1; --c-add-text:#ff6b9d; --c-add-hover:#fff5f8;
+      --c-hint:#e8879d; --c-tab-grad:linear-gradient(135deg,#f9a8cc,#f06090); }
+    .editor-body.tab-slap  { --c-card-bg:#fff4ed; --c-card-border:#ffb088;
+      --c-num:#ff8c5a; --c-input-border:#ffb088; --c-input-focus:#ff8c5a;
+      --c-del-hover:#ff8c5a; --c-del-bg:#fff0e6;
+      --c-add-border:#ffb088; --c-add-text:#ff8c5a; --c-add-hover:#fff8f2;
+      --c-hint:#d97a50; --c-tab-grad:linear-gradient(135deg,#fcb880,#e07040); }
+    .editor-body.tab-angry { --c-card-bg:#ffe8e8; --c-card-border:#ff6b6b;
+      --c-num:#e63946; --c-input-border:#ff6b6b; --c-input-focus:#e63946;
+      --c-del-hover:#e63946; --c-del-bg:#ffdddd;
+      --c-add-border:#ff6b6b; --c-add-text:#e63946; --c-add-hover:#fff0f0;
+      --c-hint:#c0303a; --c-tab-grad:linear-gradient(135deg,#f07080,#c02040); }
+
     .editor-wrap { width:100%; max-width:680px; margin-top:20px; }
     .editor-toggle {
       display:block; width:100%; padding:10px 18px;
@@ -325,42 +343,49 @@
       display:none; margin-top:10px; background:#fff;
       border:1.5px solid #f9c6dc; border-radius:16px;
       padding:16px; box-shadow:0 4px 16px rgba(210,100,140,.1);
+      transition:--c-card-bg .3s, --c-card-border .3s;
     }
     .editor-body.open { display:block; }
 
-    /* tabs */
+    /* tabs — 비활성: 흰 배경 + 연한 회색 테두리 */
     .editor-tabs { display:flex; gap:6px; margin-bottom:12px; }
     .editor-tab {
-      flex:1; padding:7px 4px; background:#fff0f8; border:1.5px solid #f9c6dc;
+      flex:1; padding:7px 4px; background:#fff; border:1.5px solid #e0e0e0;
       border-radius:10px; font-family:inherit; font-size:.75rem; font-weight:700;
-      color:#d4608a; cursor:pointer; transition:all .18s; touch-action:manipulation;
+      color:#aaa; cursor:pointer; transition:all .25s; touch-action:manipulation;
       text-align:center; line-height:1.3;
     }
-    .editor-tab.active { background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff; border-color:transparent; }
+    .editor-tab.active {
+      background: var(--c-tab-grad); color:#fff; border-color:transparent;
+      box-shadow:0 2px 10px rgba(0,0,0,.12);
+    }
     .editor-panel { display:none; }
     .editor-panel.active { display:block; }
 
-    /* hint text */
+    /* hint */
     .panel-hint {
-      font-size:.72rem; color:#999; margin-bottom:12px; padding: 0 2px;
+      font-size:.72rem; color: var(--c-hint); margin-bottom:12px; padding:0 2px;
+      transition:color .3s;
     }
 
     /* card list */
     .msg-list { display:flex; flex-direction:column; gap:8px; min-height:10px; }
     .msg-card {
-      background:#fff5f7; border:1px solid #ffd6e0; border-radius:12px;
-      padding:10px 12px; display:flex; flex-direction:column; gap:6px;
+      background: var(--c-card-bg); border:1px solid var(--c-card-border);
+      border-radius:12px; padding:10px 12px;
+      display:flex; flex-direction:column; gap:6px;
       animation:slideDown .2s ease;
+      transition:background .3s, border-color .3s;
     }
     @keyframes slideDown {
       from { opacity:0; transform:translateY(-8px); }
       to   { opacity:1; transform:translateY(0); }
     }
-    .msg-card-header {
-      display:flex; align-items:center; justify-content:space-between;
-    }
+    .msg-card-header { display:flex; align-items:center; justify-content:space-between; }
     .msg-card-num {
-      font-size:.7rem; font-weight:700; color:#c0608a; opacity:.75;
+      font-size:.7rem; font-weight:700;
+      color: var(--c-num); opacity:.85;
+      transition:color .3s;
     }
     .msg-card-del {
       background:none; border:none; cursor:pointer; font-size:1rem;
@@ -368,15 +393,15 @@
       color:#ccc; transition:color .15s, background .15s;
       touch-action:manipulation;
     }
-    .msg-card-del:hover { color:#e03030; background:#ffe0e0; }
+    .msg-card-del:hover { color: var(--c-del-hover); background: var(--c-del-bg); }
     .msg-card input {
       width:100%; padding:7px 10px;
-      border:1.5px solid #ffd6e0; border-radius:8px;
+      border:1.5px solid var(--c-input-border); border-radius:8px;
       font-family:inherit; font-size:.85rem; color:#444;
       outline:none; background:#fff;
       transition:border-color .18s;
     }
-    .msg-card input:focus { border-color:#f06090; }
+    .msg-card input:focus { border-color: var(--c-input-focus); }
 
     /* empty state */
     .msg-empty {
@@ -388,24 +413,23 @@
     /* add button */
     .btn-add-msg {
       display:block; width:100%; margin-top:8px; padding:10px;
-      background:#fff; border:2px dashed #f9c6dc; border-radius:12px;
-      font-family:inherit; font-size:.85rem; font-weight:700; color:#d4608a;
-      cursor:pointer; text-align:center; transition:all .18s;
+      background:#fff; border:2px dashed var(--c-add-border); border-radius:12px;
+      font-family:inherit; font-size:.85rem; font-weight:700;
+      color: var(--c-add-text);
+      cursor:pointer; text-align:center; transition:all .25s;
       touch-action:manipulation;
     }
-    .btn-add-msg:hover { background:#fff5f8; border-color:#f06090; }
+    .btn-add-msg:hover { background: var(--c-add-hover); border-color: var(--c-input-focus); }
 
     /* actions */
-    .editor-actions {
-      display:flex; gap:8px; margin-top:14px; justify-content:flex-end;
-    }
+    .editor-actions { display:flex; gap:8px; margin-top:14px; justify-content:flex-end; }
     .btn-save, .btn-clear {
       padding:8px 18px; border-radius:50px; font-family:inherit;
       font-size:.82rem; font-weight:700; cursor:pointer;
       touch-action:manipulation; transition:all .18s;
     }
     .btn-save {
-      background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff; border:none;
+      background: var(--c-tab-grad); color:#fff; border:none;
       box-shadow:0 2px 10px rgba(240,96,144,.3);
     }
     .btn-save:hover { box-shadow:0 4px 16px rgba(240,96,144,.45); transform:translateY(-1px); }
@@ -924,6 +948,12 @@
     });
 
     // 탭 전환
+    const editorBody = document.getElementById('editorBody');
+    function applyEditorTabTheme(tabKey) {
+      editorBody.classList.remove('tab-slap', 'tab-angry');
+      if (tabKey === 'slap')  editorBody.classList.add('tab-slap');
+      if (tabKey === 'angry') editorBody.classList.add('tab-angry');
+    }
     document.querySelectorAll('.editor-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
@@ -931,6 +961,7 @@
         tab.classList.add('active');
         activeEditorTab = tab.dataset.tab;
         document.getElementById('panel-' + activeEditorTab).classList.add('active');
+        applyEditorTabTheme(activeEditorTab);
       });
     });
 
