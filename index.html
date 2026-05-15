@@ -458,7 +458,7 @@
 
     <!-- Center: gauge + image -->
     <div class="image-col">
-      <div class="gauge-label" id="gaugeLabel">PRAISE 💕</div>
+      <div class="gauge-label" id="gaugeLabel">칭찬해 💕</div>
       <div class="gauge-wrap"><div class="gauge-fill" id="gaugeFill"></div></div>
       <div class="image-frame" id="imageFrame">
         <img src="hoo.png" alt="닥터후"
@@ -471,7 +471,7 @@
     <!-- Right stat -->
     <div>
       <div class="stat-box right">
-        <div class="label" id="statLabel">PRAISE 💕</div>
+        <div class="label" id="statLabel">칭찬해 💕</div>
         <div class="value" id="statValue">0</div>
       </div>
       <div class="status-text" id="statusText">칭찬중</div>
@@ -541,7 +541,7 @@
         emojis:          ['💖','✨','🌸','💕','⭐','🎀'],
         impactParticles: ['✨','💖','🌸','⭐'],
         flashColor:      'rgba(255,200,230,.5)',
-        statLabel:       'PRAISE 💕',
+        statLabel:       '칭찬해 💕',
         statusText:      '칭찬중',
         overlayEmoji:    '💖',
         handEmoji:       '👋',
@@ -592,10 +592,10 @@
 
     /* ── Gauge config ─────────────────────────────── */
     const praiseGauge = [
-      { max:10,  label:'PRAISE 💕',    fill:'linear-gradient(90deg,#ffb6c1,#f9a8cc)', body:'',       frame:'' },
-      { max:25,  label:'LOVE 💖',      fill:'linear-gradient(90deg,#ff9ab8,#f06090)', body:'',       frame:'' },
-      { max:50,  label:'BIG LOVE 💗✨', fill:'linear-gradient(90deg,#ff7aaa,#e04080)', body:'',       frame:'' },
-      { max:9999,label:'MAX LOVE 🌸💝',fill:'linear-gradient(90deg,#ff4d94,#c0206a)', body:'',       frame:'' },
+      { max:10,  label:'칭찬해 💕',    fill:'linear-gradient(90deg,#ffb6c1,#f9a8cc)', body:'',       frame:'' },
+      { max:25,  label:'사랑해 💖',    fill:'linear-gradient(90deg,#ff9ab8,#f06090)', body:'',       frame:'' },
+      { max:50,  label:'팬이에요 🥵✨', fill:'linear-gradient(90deg,#ff7aaa,#e04080)', body:'',       frame:'' },
+      { max:9999,label:'환자후 🌸💝',  fill:'linear-gradient(90deg,#ff4d94,#c0206a)', body:'',       frame:'' },
     ];
     const scoldGauge = [
       { max:10,  label:'😊 살살~',     fill:'linear-gradient(90deg,#ffb6c1,#ff8fa0)', body:'',                 frame:'' },
@@ -688,7 +688,7 @@
         frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
         document.body.classList.remove('rage-3','rage-max');
       } else {
-        gaugeLabel.textContent = '찰싹 🍑';
+        gaugeLabel.textContent = '찰싹찰싹 🍑';
         gaugeFill.style.background = 'linear-gradient(90deg,#ffb880,#e07040)';
         frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
         document.body.classList.remove('rage-3','rage-max');
