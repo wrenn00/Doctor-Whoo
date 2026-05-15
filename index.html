@@ -133,7 +133,7 @@
       align-items: flex-start;
       gap: 16px;
       width: 100%;
-      max-width: 480px;
+      max-width: 560px;
       justify-content: center;
     }
 
@@ -181,9 +181,10 @@
       border: 3px solid #f4a0c4;
       border-radius: 22px;
       overflow: hidden;
-      width: 220px;
-      height: 310px;
-      flex-shrink: 0;
+      width: clamp(180px, 48vw, 360px);
+      aspect-ratio: 3 / 4;
+      height: auto;
+      flex-shrink: 1;
       background: #fff5f9;
       display: flex;
       align-items: center;
@@ -440,10 +441,10 @@
 
     /* ── Responsive ───────────────────────────────── */
     @media (max-width: 500px) {
-      .main-area    { gap: 10px; }
-      .image-frame  { width: 180px; height: 260px; }
-      .stat-box     { min-width: 62px; padding: 11px 8px; }
-      .stat-box .value { font-size: 1.25rem; }
+      .main-area    { gap: 8px; }
+      .image-frame  { width: clamp(150px, 58vw, 280px); }
+      .stat-box     { min-width: 56px; padding: 10px 7px; }
+      .stat-box .value { font-size: 1.15rem; }
     }
   </style>
 </head>
