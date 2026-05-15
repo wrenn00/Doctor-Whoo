@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <!-- Primary -->
+  <title>닥터후 궁디팡팡 - 맞팔해주세요!</title>
+  <meta name="description" content="닥터후님 궁디팡팡! 맞팔맞팔 아자스!! 💖" />
+  <meta name="theme-color" content="#f9a8cc" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:title"       content="닥터후 궁디팡팡 - 맞팔해주세요! 💖" />
+  <meta property="og:description" content="닥터후님 팡팡! 잘했어요 / 찰싹 / 혼내기 모드로 응원해요 🍑😡" />
+  <meta property="og:image"       content="hoo.png" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:title"       content="닥터후 궁디팡팡 - 맞팔해주세요! 💖" />
+  <meta name="twitter:description" content="닥터후님 팡팡! 맞팔맞팔 아자스!!" />
+  <meta name="twitter:image"       content="hoo.png" />
+
+  <!-- iOS -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+  <style>
+    /* ── Reset ───────────────────────────────────── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ── Body & theme ────────────────────────────── */
+    body {
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      background: linear-gradient(135deg, #fff0f5 0%, #ffe4ef 50%, #fff8fb 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 24px 16px 40px;
+      transition: background 0.3s ease;
+      /* prevent double-tap zoom globally */
+      touch-action: manipulation;
+    }
+    body.mode-spank {
+      background: linear-gradient(135deg, #fff5f0 0%, #ffe8d8 50%, #fffaf7 100%);
+    }
+    body.mode-scold {
+      background: linear-gradient(135deg, #fff0f0 0%, #ffd8d8 50%, #fff8f8 100%);
+    }
+
+    /* ── Title ───────────────────────────────────── */
+    h1 {
+      font-size: 1.3rem;
+      color: #d4608a;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 18px;
+      opacity: 0.85;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    body.mode-spank h1 { color: #c06030; }
+    body.mode-scold h1 { color: #b02040; }
+
+    /* ── Mode buttons ────────────────────────────── */
+    .mode-buttons {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 22px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .mode-btn {
+      padding: 9px 20px;
+      border: 2px solid transparent;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition:
+        background   0.3s ease,
+        color        0.3s ease,
+        border-color 0.3s ease,
+        box-shadow   0.3s ease,
+        transform    0.15s ease;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      user-select: none;
+    }
+    .mode-btn:hover:not(.active) {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    }
+
+    /* inactive */
+    .mode-btn.praise { color: #e0609a; border-color: #f9c6dc; }
+    .mode-btn.spank  { color: #e08050; border-color: #fad4b8; }
+    .mode-btn.scold  { color: #c04060; border-color: #f4a0b0; }
+
+    /* active = filled gradient + shadow */
+    .mode-btn.praise.active {
+      background: linear-gradient(135deg, #f9a8cc, #f06090);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 16px rgba(240,96,144,0.45);
+      transform: translateY(-1px);
+    }
+    .mode-btn.spank.active {
+      background: linear-gradient(135deg, #fcb880, #e07040);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 16px rgba(224,112,64,0.45);
+      transform: translateY(-1px);
+    }
+    .mode-btn.scold.active {
+      background: linear-gradient(135deg, #f07080, #c02040);
+      color: #fff; border-color: transparent;
+      box-shadow: 0 4px 16px rgba(192,32,64,0.45);
+      transform: translateY(-1px);
+    }
+
+    /* ── Main layout ─────────────────────────────── */
+    .main-area {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      width: 100%;
+      max-width: 480px;
+      justify-content: center;
+    }
+
+    /* ── Stat boxes ──────────────────────────────── */
+    .stat-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 14px 12px;
+      min-width: 78px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(210,100,140,0.13);
+      flex-shrink: 0;
+      border: 1.5px solid #f9c6dc;
+      transition: border-color 0.3s ease;
+      user-select: none;
+    }
+    body.mode-spank .stat-box { border-color: #fad4b8; }
+    body.mode-scold .stat-box { border-color: #f4a0b0; }
+
+    .stat-box .label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #d4608a;
+      letter-spacing: 0.06em;
+      margin-bottom: 6px;
+      opacity: 0.8;
+      transition: color 0.3s ease;
+    }
+    .stat-box.right .label { font-size: 0.65rem; }
+    body.mode-spank .stat-box .label { color: #c06030; }
+    body.mode-scold .stat-box .label { color: #b02040; }
+
+    .stat-box .value {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #c94080;
+      line-height: 1;
+      transition: color 0.3s ease;
+    }
+    body.mode-spank .stat-box .value { color: #c06030; }
+    body.mode-scold .stat-box .value { color: #b02040; }
+
+    /* ── Image frame ─────────────────────────────── */
+    .image-frame {
+      border: 3px solid #f4a0c4;
+      border-radius: 22px;
+      overflow: hidden;
+      width: 220px;
+      height: 310px;
+      flex-shrink: 0;
+      background: #fff5f9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 24px rgba(220,100,150,0.18);
+      cursor: pointer;
+      position: relative;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    body.mode-spank .image-frame {
+      border-color: #f4b090;
+      box-shadow: 0 4px 24px rgba(220,130,80,0.2);
+    }
+    body.mode-scold .image-frame {
+      border-color: #f47080;
+      box-shadow: 0 4px 24px rgba(200,50,70,0.22);
+    }
+
+    .image-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+    .image-frame .placeholder {
+      font-size: 4rem;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    /* ── Effect overlay (center emoji) ───────────── */
+    .effect-overlay {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      opacity: 0;
+      border-radius: 20px;
+    }
+    .effect-overlay.show {
+      animation: popfade 0.55s ease forwards;
+    }
+    @keyframes popfade {
+      0%   { opacity: 0; transform: scale(0.5); }
+      30%  { opacity: 1; transform: scale(1.2); }
+      70%  { opacity: 1; transform: scale(1); }
+      100% { opacity: 0; transform: scale(1.1); }
+    }
+
+    /* ── Click ripple ─────────────────────────────── */
+    .click-ripple {
+      position: absolute;
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      pointer-events: none;
+      animation: rippleOut 0.6s ease-out forwards;
+    }
+    @keyframes rippleOut {
+      0%   { transform: translate(-50%,-50%) scale(0);   opacity: 0.9; }
+      60%  { transform: translate(-50%,-50%) scale(1);   opacity: 0.6; }
+      100% { transform: translate(-50%,-50%) scale(1.3); opacity: 0;   }
+    }
+
+    /* ── Click hand emoji ─────────────────────────── */
+    .click-hand {
+      position: absolute;
+      font-size: 2rem;
+      pointer-events: none;
+      animation: handPop 0.3s ease forwards;
+      z-index: 10;
+    }
+    @keyframes handPop {
+      0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.4); }
+      40%  { opacity: 1; transform: translate(-50%,-50%) scale(1.25); }
+      70%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
+      100% { opacity: 0; transform: translate(-50%,-50%) scale(0.9); }
+    }
+
+    /* ── Impact particles ─────────────────────────── */
+    .impact-particle {
+      position: absolute;
+      font-size: 1.2rem;
+      pointer-events: none;
+      z-index: 20;
+      animation: impactFly 0.5s ease-out forwards;
+    }
+    @keyframes impactFly {
+      0%   { opacity: 1; transform: translate(0,0) scale(1); }
+      100% { opacity: 0; transform: var(--fly-to); }
+    }
+
+    /* ── Shake / squash animations ────────────────── */
+    @keyframes shake-normal {
+      0%   { transform: translateX(0)     scaleY(1)    scaleX(1); }
+      8%   { transform: translateX(0)     scaleY(0.97) scaleX(1.03); }
+      20%  { transform: translateX(-8px)  scaleY(1)    scaleX(1) rotate(-1.5deg); }
+      40%  { transform: translateX(8px)   scaleY(1)    scaleX(1) rotate(1.5deg); }
+      60%  { transform: translateX(-4px)  rotate(-0.8deg); }
+      80%  { transform: translateX(4px)   rotate(0.8deg); }
+      100% { transform: translateX(0)     scaleY(1)    scaleX(1); }
+    }
+    @keyframes shake-scold {
+      0%   { transform: translateX(0)     scaleY(1)    scaleX(1); }
+      6%   { transform: translateX(0)     scaleY(0.94) scaleX(1.06); }
+      20%  { transform: translateX(-15px) scaleY(1)    scaleX(1) rotate(-2.5deg); }
+      40%  { transform: translateX(15px)  scaleY(1)    scaleX(1) rotate(2.5deg); }
+      58%  { transform: translateX(-8px)  rotate(-1.5deg); }
+      75%  { transform: translateX(8px)   rotate(1.5deg); }
+      88%  { transform: translateX(-3px); }
+      100% { transform: translateX(0)     scaleY(1)    scaleX(1); }
+    }
+    @keyframes squash-praise {
+      0%   { transform: scaleY(1)    scaleX(1); }
+      15%  { transform: scaleY(0.97) scaleX(1.03); }
+      100% { transform: scaleY(1)    scaleX(1); }
+    }
+    .image-frame.shaking-normal {
+      animation: shake-normal  0.4s  cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .image-frame.shaking-scold {
+      animation: shake-scold   0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    .image-frame.squashing {
+      animation: squash-praise 0.4s  cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+
+    /* ── Screen flash ─────────────────────────────── */
+    .flash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 99;
+    }
+    .flash.pop { animation: flashpop 0.28s ease forwards; }
+    @keyframes flashpop {
+      0%   { opacity: 0.35; }
+      100% { opacity: 0; }
+    }
+
+    /* ── Speech bubble ────────────────────────────── */
+    .speech-bubble {
+      position: fixed;
+      background: #fff;
+      border-radius: 18px;
+      padding: 8px 14px;
+      font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 700;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 200;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      transform: translateX(-50%);
+      animation: bubbleFloat 1.2s ease-out forwards;
+    }
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-width: 8px 7px 0;
+      border-style: solid;
+      border-left-color: transparent;
+      border-right-color: transparent;
+    }
+    .speech-bubble.praise-bubble {
+      color: #d4608a;
+      border: 2px solid #f4a0c4;
+    }
+    .speech-bubble.praise-bubble::after { border-top-color: #f4a0c4; }
+    .speech-bubble.angry-bubble {
+      color: #c0242c;
+      border: 2px solid #ff4444;
+    }
+    .speech-bubble.angry-bubble::after { border-top-color: #ff4444; }
+
+    @keyframes bubbleFloat {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(0px)   scale(0.7); }
+      15%  { opacity: 1; transform: translateX(-50%) translateY(-10px)  scale(1.05); }
+      30%  { opacity: 1; transform: translateX(-50%) translateY(-14px)  scale(1); }
+      80%  { opacity: 1; transform: translateX(-50%) translateY(-50px)  scale(1); }
+      100% { opacity: 0; transform: translateX(-50%) translateY(-70px)  scale(0.9); }
+    }
+
+    /* ── Floating emojis (global) ─────────────────── */
+    .floating-emojis {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 50;
+    }
+    .emoji-particle {
+      position: absolute;
+      font-size: 1.6rem;
+      pointer-events: none;
+      animation: floatUp 1.1s ease-out forwards;
+    }
+    @keyframes floatUp {
+      0%   { opacity: 1; transform: translateY(0)      scale(1); }
+      100% { opacity: 0; transform: translateY(-160px) scale(0.6); }
+    }
+
+    /* ── Reset button ─────────────────────────────── */
+    .reset-btn {
+      margin-top: 28px;
+      padding: 11px 36px;
+      background: #fff;
+      border: 2px solid #f4a0c4;
+      border-radius: 50px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #d4608a;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 2px 10px rgba(210,100,140,0.12);
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+    .reset-btn:hover {
+      background: #ffe8f4;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 16px rgba(210,100,140,0.2);
+    }
+
+    /* ── Status text ──────────────────────────────── */
+    .status-text {
+      font-size: 0.65rem;
+      color: #d4608a;
+      font-weight: 600;
+      text-align: center;
+      margin-top: 4px;
+      opacity: 0.75;
+      min-width: 78px;
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    body.mode-spank .status-text { color: #c06030; }
+    body.mode-scold .status-text { color: #b02040; }
+
+    /* ── Responsive ───────────────────────────────── */
+    @media (max-width: 500px) {
+      .main-area    { gap: 10px; }
+      .image-frame  { width: 180px; height: 260px; }
+      .stat-box     { min-width: 62px; padding: 11px 8px; }
+      .stat-box .value { font-size: 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🩺 닥터후 팡팡</h1>
+
+  <div class="mode-buttons">
+    <button class="mode-btn praise" data-mode="praise">💖 잘했어요</button>
+    <button class="mode-btn spank"  data-mode="spank" >🍑 찰싹!</button>
+    <button class="mode-btn scold"  data-mode="scold" >😡 혼내기</button>
+  </div>
+
+  <div class="main-area">
+    <div class="stat-box left">
+      <div class="label">팡팡</div>
+      <div class="value" id="count">0</div>
+    </div>
+
+    <div class="image-frame" id="imageFrame">
+      <img src="hoo.png" alt="닥터후"
+           onerror="this.style.display='none';document.getElementById('placeholder').style.display='block'" />
+      <span class="placeholder" id="placeholder" style="display:none">🐾</span>
+      <div class="effect-overlay" id="effectOverlay"></div>
+    </div>
+
+    <div>
+      <div class="stat-box right">
+        <div class="label" id="statLabel">PRAISE 💕</div>
+        <div class="value" id="statValue">0</div>
+      </div>
+      <div class="status-text" id="statusText">칭찬중</div>
+    </div>
+  </div>
+
+  <button class="reset-btn" id="resetBtn">🔄 리셋</button>
+
+  <div class="floating-emojis" id="floatingEmojis"></div>
+  <div class="flash" id="flash"></div>
+
+  <script>
+    /* ── Mode config ──────────────────────────────── */
+    const modes = {
+      praise: {
+        emojis:          ['💖','✨','🌸','💕','⭐','🎀'],
+        impactParticles: ['✨','💖','🌸','⭐'],
+        flashColor:      'rgba(255,200,230,0.5)',
+        statLabel:       'PRAISE 💕',
+        statusText:      '칭찬중',
+        overlayEmoji:    '💖',
+        handEmoji:       '👋',
+        rippleColor:     'radial-gradient(circle,rgba(255,182,193,0.85) 0%,rgba(255,182,193,0.3) 50%,transparent 70%)',
+        shakeClass:      'squashing',
+        vibrate:         50,
+        soundType:       'praise',
+        bubbleClass:     'praise-bubble',
+        bubbleEmoji:     '💕',
+      },
+      spank: {
+        emojis:          ['🍑','💥','👋','🌟','😳'],
+        impactParticles: ['💥','✨','🌟','🍑'],
+        flashColor:      'rgba(255,160,100,0.35)',
+        statLabel:       '찰싹 🍑',
+        statusText:      '찰싹중',
+        overlayEmoji:    '💥',
+        handEmoji:       '👋',
+        rippleColor:     'radial-gradient(circle,rgba(255,160,80,0.8) 0%,rgba(255,160,80,0.25) 50%,transparent 70%)',
+        shakeClass:      'shaking-normal',
+        vibrate:         80,
+        soundType:       'spank',
+        bubbleClass:     'praise-bubble',
+        bubbleEmoji:     '🍑',
+      },
+      scold: {
+        emojis:          ['😡','⚡','🔥','💢','❗'],
+        impactParticles: ['💥','⚡','🔥','💢','❗'],
+        flashColor:      'rgba(220,60,80,0.25)',
+        statLabel:       '분노 LV',
+        statusText:      '혼내는중',
+        overlayEmoji:    '😡',
+        handEmoji:       '👊',
+        rippleColor:     'radial-gradient(circle,rgba(255,68,68,0.85) 0%,rgba(255,68,68,0.3) 50%,transparent 70%)',
+        shakeClass:      'shaking-scold',
+        vibrate:         100,
+        soundType:       'scold',
+        bubbleClass:     'angry-bubble',
+        bubbleEmoji:     '😡',
+      },
+    };
+
+    const praiseMessages = [
+      '닥터후님 맞팔해주세여',
+      '맞팔맞팔 아자스!!',
+      'azas',
+      '후님 잘생겼어요!',
+      '아작스',
+      '맞팔',
+    ];
+    const angryMessages = [
+      '닥터후님 왜 맞팔안해주세요!',
+    ];
+
+    /* ── State ────────────────────────────────────── */
+    let currentMode = 'praise';
+    let count = 0;
+    let modeCount = { praise: 0, spank: 0, scold: 0 };
+
+    /* ── DOM refs ─────────────────────────────────── */
+    const countEl    = document.getElementById('count');
+    const statLabel  = document.getElementById('statLabel');
+    const statValue  = document.getElementById('statValue');
+    const statusText = document.getElementById('statusText');
+    const frame      = document.getElementById('imageFrame');
+    const overlay    = document.getElementById('effectOverlay');
+    const flash      = document.getElementById('flash');
+    const floatArea  = document.getElementById('floatingEmojis');
+
+    /* ── Web Audio ────────────────────────────────── */
+    let audioCtx = null;
+    function getAudioCtx() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      return audioCtx;
+    }
+    function playSound(type) {
+      try {
+        const ctx  = getAudioCtx();
+        const osc  = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        const t = ctx.currentTime;
+        if (type === 'praise') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(440, t);
+          osc.frequency.exponentialRampToValueAtTime(660, t + 0.12);
+          gain.gain.setValueAtTime(0.18, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+          osc.start(t); osc.stop(t + 0.25);
+        } else if (type === 'spank') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(180, t);
+          osc.frequency.exponentialRampToValueAtTime(60, t + 0.08);
+          gain.gain.setValueAtTime(0.35, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
+          osc.start(t); osc.stop(t + 0.12);
+        } else {
+          osc.type = 'square';
+          osc.frequency.setValueAtTime(120, t);
+          osc.frequency.exponentialRampToValueAtTime(40, t + 0.15);
+          gain.gain.setValueAtTime(0.4, t);
+          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
+          osc.start(t); osc.stop(t + 0.2);
+        }
+      } catch (_) {}
+    }
+
+    /* ── Mode switching ───────────────────────────── */
+    function switchMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.mode-btn[data-mode="${mode}"]`).classList.add('active');
+      document.body.classList.remove('mode-spank', 'mode-scold');
+      if (mode !== 'praise') document.body.classList.add('mode-' + mode);
+      updateStatUI();
+    }
+    document.querySelectorAll('.mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => switchMode(btn.dataset.mode));
+    });
+
+    function updateStatUI() {
+      const m = modes[currentMode];
+      statLabel.textContent  = m.statLabel;
+      statValue.textContent  = modeCount[currentMode];
+      statusText.textContent = m.statusText;
+    }
+
+    /* ── Touch / click unified handler ───────────── */
+    function handleInteraction(clientX, clientY) {
+      count++;
+      modeCount[currentMode]++;
+      countEl.textContent = count;
+      updateStatUI();
+
+      const m    = modes[currentMode];
+      const rect = frame.getBoundingClientRect();
+      const lx   = clientX - rect.left;
+      const ly   = clientY - rect.top;
+
+      // 1. Shake / squash
+      frame.classList.remove('shaking-normal', 'shaking-scold', 'squashing');
+      void frame.offsetWidth;
+      frame.classList.add(m.shakeClass);
+      frame.addEventListener('animationend', () => {
+        frame.classList.remove('shaking-normal', 'shaking-scold', 'squashing');
+      }, { once: true });
+
+      // 2. Ripple
+      const ripple = document.createElement('div');
+      ripple.className = 'click-ripple';
+      ripple.style.cssText = `left:${lx}px;top:${ly}px;background:${m.rippleColor}`;
+      frame.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 650);
+
+      // 3. Hand emoji
+      const hand = document.createElement('span');
+      hand.className = 'click-hand';
+      hand.textContent = m.handEmoji;
+      hand.style.cssText = `left:${lx}px;top:${ly}px`;
+      frame.appendChild(hand);
+      setTimeout(() => hand.remove(), 350);
+
+      // 4. Impact particles
+      spawnImpactParticles(m.impactParticles, lx, ly, currentMode === 'scold' ? 6 : 4);
+
+      // 5. Screen flash
+      flash.style.background = m.flashColor;
+      flash.classList.remove('pop');
+      void flash.offsetWidth;
+      flash.classList.add('pop');
+
+      // 6. Overlay emoji
+      overlay.textContent = m.overlayEmoji;
+      overlay.classList.remove('show');
+      void overlay.offsetWidth;
+      overlay.classList.add('show');
+
+      // 7. Floating emojis
+      for (let i = 0; i < 4; i++) spawnEmoji(m.emojis, clientX, clientY);
+
+      // 8. Vibration
+      if (navigator.vibrate) navigator.vibrate(m.vibrate);
+
+      // 9. Sound
+      playSound(m.soundType);
+
+      // 10. Speech bubble
+      spawnBubble(m, clientX, clientY);
+    }
+
+    // Click
+    frame.addEventListener('click', e => {
+      handleInteraction(e.clientX, e.clientY);
+    });
+
+    // Touch (prevent ghost click on mobile)
+    frame.addEventListener('touchstart', e => {
+      e.preventDefault();
+      const t = e.changedTouches[0];
+      handleInteraction(t.clientX, t.clientY);
+    }, { passive: false });
+
+    /* ── Particle helpers ─────────────────────────── */
+    function spawnImpactParticles(particles, lx, ly, n) {
+      for (let i = 0; i < n; i++) {
+        const el = document.createElement('span');
+        el.className = 'impact-particle';
+        el.textContent = particles[Math.floor(Math.random() * particles.length)];
+        el.style.left = lx + 'px';
+        el.style.top  = ly + 'px';
+        const angle = ((360 / n) * i + (Math.random() - 0.5) * 40) * (Math.PI / 180);
+        const dist  = 45 + Math.random() * 35;
+        el.style.setProperty('--fly-to',
+          `translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(0.4)`);
+        el.style.animationDelay = Math.random() * 0.06 + 's';
+        frame.appendChild(el);
+        setTimeout(() => el.remove(), 600);
+      }
+    }
+
+    function spawnEmoji(emojis, cx, cy) {
+      const el = document.createElement('span');
+      el.className = 'emoji-particle';
+      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      el.style.left = (cx + (Math.random() - 0.5) * 80) + 'px';
+      el.style.top  = (cy + (Math.random() - 0.5) * 40) + 'px';
+      el.style.animationDelay = Math.random() * 0.15 + 's';
+      floatArea.appendChild(el);
+      setTimeout(() => el.remove(), 1300);
+    }
+
+    function spawnBubble(m, cx, cy) {
+      const pool = m.bubbleClass === 'angry-bubble' ? angryMessages : praiseMessages;
+      const text = pool[Math.floor(Math.random() * pool.length)];
+      const el   = document.createElement('div');
+      el.className = 'speech-bubble ' + m.bubbleClass;
+      el.textContent = m.bubbleEmoji + ' ' + text;
+      el.style.left  = cx + 'px';
+      el.style.top   = (cy - 50) + 'px';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1300);
+    }
+
+    /* ── Reset ────────────────────────────────────── */
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      count = 0;
+      modeCount = { praise: 0, spank: 0, scold: 0 };
+      countEl.textContent = 0;
+      switchMode('praise');
+    });
+
+    /* ── Init ─────────────────────────────────────── */
+    switchMode('praise');
+  </script>
+</body>
+</html>
