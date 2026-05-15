@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>닥터후 궁디팡팡 - 맞팔해주세요!</title>
   <meta name="description" content="닥터후님 궁디팡팡! 맞팔맞팔 아자스!! 💖" />
   <meta name="theme-color" content="#f9a8cc" />
@@ -450,16 +450,72 @@
     .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
     /* ── Responsive ───────────────────────────────── */
-    @media (max-width:600px) {
-      .main-area { gap:8px; }
-      .image-col { max-width:90vw; }
-      .stat-box  { min-width:56px; padding:10px 7px; }
-      .stat-box .value { font-size:1.15rem; }
-      .stat-box .label { font-size:.62rem; }
+    /* ── counters-row: 데스크탑에서 투명 래퍼 ─────── */
+    .counters-row { display:contents; }
+    .stat-right-wrap { display:flex; flex-direction:column; align-items:center; }
+
+    /* ── 모바일 레이아웃 ─────────────────────────── */
+    @media (max-width:768px) {
+      body {
+        padding: 16px 14px max(32px, env(safe-area-inset-bottom));
+        overscroll-behavior: contain;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      h1 { margin-top:4px; margin-bottom:14px; }
+
+      /* 모드 버튼: 한 줄 균등 분할 */
+      .mode-buttons { gap:6px; margin-bottom:16px; flex-wrap:nowrap; }
+      .mode-btn {
+        flex:1; padding:10px 4px; font-size:.8rem;
+        min-height:44px;
+      }
+
+      /* main-area: 세로 스택 */
+      .main-area {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        max-width: 100%;
+      }
+
+      /* counters-row: 이미지 위에 가로 2칸 */
+      .counters-row {
+        display: flex;
+        flex-direction: row;
+        gap: 12px;
+        width: 100%;
+        order: 1;
+      }
+      .counters-row .stat-box { flex:1; min-width:0; padding:10px 8px; }
+      .stat-right-wrap { flex:1; }
+      .stat-right-wrap .stat-box { width:100%; }
+
+      /* image-col: 아래로 */
+      .image-col {
+        order: 2;
+        width: 92%;
+        max-width: 480px;
+      }
+
+      /* stat-box 크기 */
+      .stat-box .value { font-size:1.2rem; }
+      .stat-box .label { font-size:.65rem; }
+      .status-text { font-size:.62rem; margin-top:3px; }
+
+      /* 리셋 버튼 */
+      .reset-btn { margin-top:18px; padding:12px 32px; min-height:44px; }
+
+      /* 메시지 편집 */
+      .editor-wrap { margin-top:16px; }
+      .msg-card input { font-size:16px; } /* iOS 자동 줌 방지 */
+      .msg-card-del { min-width:36px; min-height:36px; display:flex; align-items:center; justify-content:center; }
     }
-    @media (max-width:400px) {
-      .stat-box { min-width:46px; padding:8px 5px; }
-      .stat-box .value { font-size:1rem; }
+
+    /* 작은 화면 (SE 등) */
+    @media (max-width:380px) {
+      .mode-btn { font-size:.72rem; padding:9px 3px; }
+      .stat-box .value { font-size:1.05rem; }
     }
   </style>
 </head>
@@ -474,10 +530,22 @@
   </div>
 
   <div class="main-area">
-    <!-- Left stat -->
-    <div class="stat-box left">
-      <div class="label">팡팡</div>
-      <div class="value" id="count">0</div>
+    <!-- counters-row: display:contents on desktop → spread as flex children
+                       display:flex on mobile    → row above image -->
+    <div class="counters-row">
+      <!-- Left stat -->
+      <div class="stat-box left">
+        <div class="label">팡팡</div>
+        <div class="value" id="count">0</div>
+      </div>
+      <!-- Right stat -->
+      <div class="stat-right-wrap">
+        <div class="stat-box right">
+          <div class="label" id="statLabel">칭찬해 💕</div>
+          <div class="value" id="statValue">0</div>
+        </div>
+        <div class="status-text" id="statusText">칭찬중</div>
+      </div>
     </div>
 
     <!-- Center: gauge + image -->
@@ -490,15 +558,6 @@
         <span class="placeholder" id="placeholder" style="display:none">🐾</span>
         <div class="effect-overlay" id="effectOverlay"></div>
       </div>
-    </div>
-
-    <!-- Right stat -->
-    <div>
-      <div class="stat-box right">
-        <div class="label" id="statLabel">칭찬해 💕</div>
-        <div class="value" id="statValue">0</div>
-      </div>
-      <div class="status-text" id="statusText">칭찬중</div>
     </div>
   </div>
 
