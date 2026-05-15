@@ -3,35 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
-  <!-- Primary -->
   <title>닥터후 궁디팡팡 - 맞팔해주세요!</title>
   <meta name="description" content="닥터후님 궁디팡팡! 맞팔맞팔 아자스!! 💖" />
   <meta name="theme-color" content="#f9a8cc" />
-
-  <!-- Open Graph -->
   <meta property="og:type"        content="website" />
   <meta property="og:title"       content="닥터후 궁디팡팡 - 맞팔해주세요! 💖" />
   <meta property="og:description" content="닥터후님 팡팡! 잘했어요 / 찰싹 / 혼내기 모드로 응원해요 🍑😡" />
   <meta property="og:image"       content="hoo.png" />
-
-  <!-- Twitter -->
   <meta name="twitter:card"        content="summary_large_image" />
   <meta name="twitter:title"       content="닥터후 궁디팡팡 - 맞팔해주세요! 💖" />
   <meta name="twitter:description" content="닥터후님 팡팡! 맞팔맞팔 아자스!!" />
   <meta name="twitter:image"       content="hoo.png" />
-
-  <!-- iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
 
   <style>
     /* ── Reset ───────────────────────────────────── */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     /* ── Body & theme ────────────────────────────── */
     body {
@@ -42,409 +29,360 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding: 24px 16px 40px;
+      padding: 24px 16px 48px;
       transition: background 0.3s ease;
-      /* prevent double-tap zoom globally */
       touch-action: manipulation;
     }
-    body.mode-spank {
-      background: linear-gradient(135deg, #fff5f0 0%, #ffe8d8 50%, #fffaf7 100%);
-    }
-    body.mode-scold {
-      background: linear-gradient(135deg, #fff0f0 0%, #ffd8d8 50%, #fff8f8 100%);
-    }
+    body.mode-spank { background: linear-gradient(135deg, #fff5f0 0%, #ffe8d8 50%, #fffaf7 100%); }
+    body.mode-scold { background: linear-gradient(135deg, #fff0f0 0%, #ffd8d8 50%, #fff8f8 100%); }
+    body.rage-3     { background: linear-gradient(135deg, #ffe8e8 0%, #ffcccc 50%, #fff0f0 100%); }
+    body.rage-max   { background: linear-gradient(135deg, #ffcccc 0%, #ffaaaa 50%, #ffdddd 100%); }
 
     /* ── Title ───────────────────────────────────── */
     h1 {
-      font-size: 1.3rem;
-      color: #d4608a;
-      font-weight: 700;
-      letter-spacing: 0.05em;
-      margin-bottom: 18px;
-      opacity: 0.85;
-      transition: color 0.3s ease;
-      user-select: none;
+      font-size: 1.3rem; color: #d4608a; font-weight: 700;
+      letter-spacing: 0.05em; margin-bottom: 18px; opacity: 0.85;
+      transition: color 0.3s ease; user-select: none;
     }
     body.mode-spank h1 { color: #c06030; }
     body.mode-scold h1 { color: #b02040; }
 
     /* ── Mode buttons ────────────────────────────── */
     .mode-buttons {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 22px;
-      flex-wrap: wrap;
-      justify-content: center;
+      display: flex; gap: 10px; margin-bottom: 22px;
+      flex-wrap: wrap; justify-content: center;
     }
-
     .mode-btn {
-      padding: 9px 20px;
-      border: 2px solid transparent;
-      border-radius: 50px;
-      font-family: inherit;
-      font-size: 0.95rem;
-      font-weight: 600;
-      cursor: pointer;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      transition:
-        background   0.3s ease,
-        color        0.3s ease,
-        border-color 0.3s ease,
-        box-shadow   0.3s ease,
-        transform    0.15s ease;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
-      user-select: none;
+      padding: 9px 20px; border: 2px solid transparent; border-radius: 50px;
+      font-family: inherit; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      transition: background .3s, color .3s, border-color .3s, box-shadow .3s, transform .15s;
+      background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,.07); user-select: none;
     }
-    .mode-btn:hover:not(.active) {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-    }
-
-    /* inactive */
+    .mode-btn:hover:not(.active) { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.12); }
     .mode-btn.praise { color: #e0609a; border-color: #f9c6dc; }
     .mode-btn.spank  { color: #e08050; border-color: #fad4b8; }
     .mode-btn.scold  { color: #c04060; border-color: #f4a0b0; }
-
-    /* active = filled gradient + shadow */
     .mode-btn.praise.active {
-      background: linear-gradient(135deg, #f9a8cc, #f06090);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 4px 16px rgba(240,96,144,0.45);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg,#f9a8cc,#f06090); color:#fff;
+      border-color:transparent; box-shadow:0 4px 16px rgba(240,96,144,.45); transform:translateY(-1px);
     }
     .mode-btn.spank.active {
-      background: linear-gradient(135deg, #fcb880, #e07040);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 4px 16px rgba(224,112,64,0.45);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg,#fcb880,#e07040); color:#fff;
+      border-color:transparent; box-shadow:0 4px 16px rgba(224,112,64,.45); transform:translateY(-1px);
     }
     .mode-btn.scold.active {
-      background: linear-gradient(135deg, #f07080, #c02040);
-      color: #fff; border-color: transparent;
-      box-shadow: 0 4px 16px rgba(192,32,64,0.45);
-      transform: translateY(-1px);
+      background: linear-gradient(135deg,#f07080,#c02040); color:#fff;
+      border-color:transparent; box-shadow:0 4px 16px rgba(192,32,64,.45); transform:translateY(-1px);
     }
 
     /* ── Main layout ─────────────────────────────── */
     .main-area {
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-      width: 100%;
-      max-width: 560px;
-      justify-content: center;
+      display: flex; align-items: flex-start; gap: 14px;
+      width: 100%; max-width: 780px; justify-content: center;
     }
 
     /* ── Stat boxes ──────────────────────────────── */
     .stat-box {
-      background: #fff;
-      border-radius: 16px;
-      padding: 14px 12px;
-      min-width: 78px;
-      text-align: center;
-      box-shadow: 0 2px 12px rgba(210,100,140,0.13);
-      flex-shrink: 0;
-      border: 1.5px solid #f9c6dc;
-      transition: border-color 0.3s ease;
-      user-select: none;
+      background: #fff; border-radius: 16px; padding: 14px 12px;
+      min-width: 78px; text-align: center;
+      box-shadow: 0 2px 12px rgba(210,100,140,.13);
+      flex-shrink: 0; border: 1.5px solid #f9c6dc;
+      transition: border-color .3s; user-select: none;
     }
     body.mode-spank .stat-box { border-color: #fad4b8; }
     body.mode-scold .stat-box { border-color: #f4a0b0; }
-
     .stat-box .label {
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: #d4608a;
-      letter-spacing: 0.06em;
-      margin-bottom: 6px;
-      opacity: 0.8;
-      transition: color 0.3s ease;
+      font-size: .7rem; font-weight: 700; color: #d4608a;
+      letter-spacing: .06em; margin-bottom: 6px; opacity: .8;
+      transition: color .3s;
     }
-    .stat-box.right .label { font-size: 0.65rem; }
+    .stat-box.right .label { font-size: .62rem; }
     body.mode-spank .stat-box .label { color: #c06030; }
     body.mode-scold .stat-box .label { color: #b02040; }
-
     .stat-box .value {
-      font-size: 1.5rem;
-      font-weight: 800;
-      color: #c94080;
-      line-height: 1;
-      transition: color 0.3s ease;
+      font-size: 1.5rem; font-weight: 800; color: #c94080;
+      line-height: 1; transition: color .3s;
     }
     body.mode-spank .stat-box .value { color: #c06030; }
     body.mode-scold .stat-box .value { color: #b02040; }
 
+    /* ── Image column (frame + gauge) ────────────── */
+    .image-col {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 10px; flex: 1; max-width: 600px; min-width: 0;
+    }
+
+    /* ── Gauge bar ───────────────────────────────── */
+    .gauge-wrap {
+      width: 100%; background: #ffe0e6; border-radius: 999px;
+      height: 16px; overflow: hidden;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,.08);
+    }
+    .gauge-fill {
+      height: 100%; width: 0%; border-radius: 999px;
+      background: linear-gradient(90deg,#ffb6c1,#ff4757);
+      transition: width .4s ease, background .5s ease;
+    }
+    .gauge-label {
+      font-size: .72rem; font-weight: 700; color: #d4608a;
+      text-align: center; user-select: none; transition: color .3s;
+    }
+
     /* ── Image frame ─────────────────────────────── */
     .image-frame {
-      border: 3px solid #f4a0c4;
-      border-radius: 22px;
-      overflow: hidden;
-      width: clamp(180px, 48vw, 360px);
-      aspect-ratio: 3 / 4;
-      height: auto;
-      flex-shrink: 1;
+      border: 3px solid #f4a0c4; border-radius: 22px; overflow: hidden;
+      width: 100%; aspect-ratio: 3 / 4;
       background: #fff5f9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 24px rgba(220,100,150,0.18);
-      cursor: pointer;
-      position: relative;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 8px 32px rgba(255,105,135,.25);
+      cursor: pointer; position: relative;
+      touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+      transition: border-color .3s, box-shadow .3s, filter .3s;
       user-select: none;
     }
-    body.mode-spank .image-frame {
-      border-color: #f4b090;
-      box-shadow: 0 4px 24px rgba(220,130,80,0.2);
+    body.mode-spank .image-frame { border-color:#f4b090; box-shadow:0 8px 32px rgba(220,130,80,.22); }
+    body.mode-scold .image-frame { border-color:#f47080; box-shadow:0 8px 32px rgba(200,50,70,.24); }
+
+    /* rage glow levels */
+    .image-frame.rage-1 { border-color:#ff6b6b; }
+    .image-frame.rage-2 { border-color:#ff4444; filter:drop-shadow(0 0 8px rgba(255,68,68,.55)); }
+    .image-frame.rage-3 { border-color:#cc0000; filter:drop-shadow(0 0 14px rgba(200,0,0,.65)); }
+    .image-frame.rage-max {
+      border-color:#880000;
+      filter:drop-shadow(0 0 22px rgba(180,0,0,.8));
+      animation: frameShudder .12s infinite alternate;
     }
-    body.mode-scold .image-frame {
-      border-color: #f47080;
-      box-shadow: 0 4px 24px rgba(200,50,70,0.22);
+    .image-frame.faint { animation: faintTilt 1s ease forwards; }
+    @keyframes frameShudder {
+      from { transform: translateX(-2px); }
+      to   { transform: translateX(2px); }
+    }
+    @keyframes faintTilt {
+      0%   { transform: rotate(0); }
+      30%  { transform: rotate(-6deg) scale(.97); }
+      60%  { transform: rotate(4deg) scale(.96); }
+      100% { transform: rotate(-3deg) scale(.95); }
     }
 
     .image-frame img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-      pointer-events: none;
-      user-select: none;
-      -webkit-user-drag: none;
+      width:100%; height:100%; object-fit:contain; display:block;
+      pointer-events:none; user-select:none; -webkit-user-drag:none;
     }
-    .image-frame .placeholder {
-      font-size: 4rem;
-      opacity: 0.35;
-      pointer-events: none;
+    .image-frame .placeholder { font-size:4rem; opacity:.35; pointer-events:none; }
+
+    /* ── Effect overlay ──────────────────────────── */
+    .effect-overlay {
+      position:absolute; inset:0; pointer-events:none;
+      display:flex; align-items:center; justify-content:center;
+      font-size:3rem; opacity:0; border-radius:20px;
+    }
+    .effect-overlay.show { animation: popfade .55s ease forwards; }
+    @keyframes popfade {
+      0%  { opacity:0; transform:scale(.5); }
+      30% { opacity:1; transform:scale(1.2); }
+      70% { opacity:1; transform:scale(1); }
+      100%{ opacity:0; transform:scale(1.1); }
     }
 
-    /* ── Effect overlay (center emoji) ───────────── */
-    .effect-overlay {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      opacity: 0;
-      border-radius: 20px;
+    /* ── Shake / squash ──────────────────────────── */
+    @keyframes shake-normal {
+      0%,100%{ transform:translateX(0) scaleX(1) scaleY(1); }
+      10%    { transform:translateX(0) scaleX(1.03) scaleY(.97); }
+      25%    { transform:translateX(-8px) rotate(-1deg); }
+      50%    { transform:translateX(8px) rotate(1deg); }
+      70%    { transform:translateX(-4px) rotate(-.5deg); }
+      85%    { transform:translateX(4px) rotate(.5deg); }
     }
-    .effect-overlay.show {
-      animation: popfade 0.55s ease forwards;
+    @keyframes shake-scold {
+      0%,100%{ transform:translateX(0) scaleX(1) scaleY(1); }
+      8%     { transform:translateX(0) scaleX(1.06) scaleY(.94); }
+      22%    { transform:translateX(-15px) rotate(-2deg); }
+      44%    { transform:translateX(15px) rotate(2deg); }
+      62%    { transform:translateX(-8px) rotate(-1deg); }
+      78%    { transform:translateX(8px) rotate(1deg); }
+      90%    { transform:translateX(-3px); }
     }
-    @keyframes popfade {
-      0%   { opacity: 0; transform: scale(0.5); }
-      30%  { opacity: 1; transform: scale(1.2); }
-      70%  { opacity: 1; transform: scale(1); }
-      100% { opacity: 0; transform: scale(1.1); }
+    @keyframes squash {
+      0%  { transform:scale(1,1); }
+      30% { transform:scale(1.05,.95); }
+      60% { transform:scale(.97,1.03); }
+      100%{ transform:scale(1,1); }
     }
+    .image-frame.anim-shake-normal { animation:shake-normal .4s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .image-frame.anim-shake-scold  { animation:shake-scold  .5s cubic-bezier(.34,1.56,.64,1) forwards; }
+    .image-frame.anim-squash       { animation:squash        .3s cubic-bezier(.34,1.56,.64,1) forwards; }
 
     /* ── Click ripple ─────────────────────────────── */
     .click-ripple {
-      position: absolute;
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      pointer-events: none;
-      animation: rippleOut 0.6s ease-out forwards;
+      position:absolute; width:100px; height:100px; border-radius:50%;
+      pointer-events:none; animation:rippleOut .6s ease-out forwards;
     }
     @keyframes rippleOut {
-      0%   { transform: translate(-50%,-50%) scale(0);   opacity: 0.9; }
-      60%  { transform: translate(-50%,-50%) scale(1);   opacity: 0.6; }
-      100% { transform: translate(-50%,-50%) scale(1.3); opacity: 0;   }
+      0%  { transform:translate(-50%,-50%) scale(0);   opacity:.9; }
+      60% { transform:translate(-50%,-50%) scale(1);   opacity:.55; }
+      100%{ transform:translate(-50%,-50%) scale(1.4); opacity:0; }
     }
 
     /* ── Click hand emoji ─────────────────────────── */
     .click-hand {
-      position: absolute;
-      font-size: 2rem;
-      pointer-events: none;
-      animation: handPop 0.3s ease forwards;
-      z-index: 10;
+      position:absolute; font-size:2rem; pointer-events:none;
+      animation:handPop .3s ease forwards; z-index:10;
     }
     @keyframes handPop {
-      0%   { opacity: 0; transform: translate(-50%,-50%) scale(0.4); }
-      40%  { opacity: 1; transform: translate(-50%,-50%) scale(1.25); }
-      70%  { opacity: 1; transform: translate(-50%,-50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%,-50%) scale(0.9); }
+      0%  { opacity:0; transform:translate(-50%,-50%) scale(.4); }
+      40% { opacity:1; transform:translate(-50%,-50%) scale(1.3); }
+      70% { opacity:1; transform:translate(-50%,-50%) scale(1); }
+      100%{ opacity:0; transform:translate(-50%,-50%) scale(.9); }
     }
 
     /* ── Impact particles ─────────────────────────── */
     .impact-particle {
-      position: absolute;
-      font-size: 1.2rem;
-      pointer-events: none;
-      z-index: 20;
-      animation: impactFly 0.5s ease-out forwards;
+      position:absolute; font-size:1.2rem; pointer-events:none;
+      z-index:20; animation:impactFly .5s ease-out forwards;
     }
     @keyframes impactFly {
-      0%   { opacity: 1; transform: translate(0,0) scale(1); }
-      100% { opacity: 0; transform: var(--fly-to); }
-    }
-
-    /* ── Shake / squash animations ────────────────── */
-    @keyframes shake-normal {
-      0%   { transform: translateX(0)     scaleY(1)    scaleX(1); }
-      8%   { transform: translateX(0)     scaleY(0.97) scaleX(1.03); }
-      20%  { transform: translateX(-8px)  scaleY(1)    scaleX(1) rotate(-1.5deg); }
-      40%  { transform: translateX(8px)   scaleY(1)    scaleX(1) rotate(1.5deg); }
-      60%  { transform: translateX(-4px)  rotate(-0.8deg); }
-      80%  { transform: translateX(4px)   rotate(0.8deg); }
-      100% { transform: translateX(0)     scaleY(1)    scaleX(1); }
-    }
-    @keyframes shake-scold {
-      0%   { transform: translateX(0)     scaleY(1)    scaleX(1); }
-      6%   { transform: translateX(0)     scaleY(0.94) scaleX(1.06); }
-      20%  { transform: translateX(-15px) scaleY(1)    scaleX(1) rotate(-2.5deg); }
-      40%  { transform: translateX(15px)  scaleY(1)    scaleX(1) rotate(2.5deg); }
-      58%  { transform: translateX(-8px)  rotate(-1.5deg); }
-      75%  { transform: translateX(8px)   rotate(1.5deg); }
-      88%  { transform: translateX(-3px); }
-      100% { transform: translateX(0)     scaleY(1)    scaleX(1); }
-    }
-    @keyframes squash-praise {
-      0%   { transform: scaleY(1)    scaleX(1); }
-      15%  { transform: scaleY(0.97) scaleX(1.03); }
-      100% { transform: scaleY(1)    scaleX(1); }
-    }
-    .image-frame.shaking-normal {
-      animation: shake-normal  0.4s  cubic-bezier(0.34,1.56,0.64,1) forwards;
-    }
-    .image-frame.shaking-scold {
-      animation: shake-scold   0.45s cubic-bezier(0.34,1.56,0.64,1) forwards;
-    }
-    .image-frame.squashing {
-      animation: squash-praise 0.4s  cubic-bezier(0.34,1.56,0.64,1) forwards;
+      0%  { opacity:1; transform:translate(0,0) scale(1); }
+      100%{ opacity:0; transform:var(--fly-to); }
     }
 
     /* ── Screen flash ─────────────────────────────── */
-    .flash {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      opacity: 0;
-      z-index: 99;
+    .flash { position:fixed; inset:0; pointer-events:none; opacity:0; z-index:99; }
+    .flash.pop { animation:flashpop .28s ease forwards; }
+    @keyframes flashpop { 0%{ opacity:.35; } 100%{ opacity:0; } }
+
+    /* ── Floating emojis ─────────────────────────── */
+    .floating-emojis { position:fixed; inset:0; pointer-events:none; overflow:hidden; z-index:50; }
+    .emoji-particle {
+      position:absolute; font-size:1.6rem; pointer-events:none;
+      animation:floatUp 1.1s ease-out forwards;
     }
-    .flash.pop { animation: flashpop 0.28s ease forwards; }
-    @keyframes flashpop {
-      0%   { opacity: 0.35; }
-      100% { opacity: 0; }
+    @keyframes floatUp {
+      0%  { opacity:1; transform:translateY(0) scale(1); }
+      100%{ opacity:0; transform:translateY(-160px) scale(.6); }
     }
 
     /* ── Speech bubble ────────────────────────────── */
     .speech-bubble {
-      position: fixed;
-      background: #fff;
-      border-radius: 18px;
-      padding: 8px 14px;
-      font-family: 'Pretendard', 'Apple SD Gothic Neo', sans-serif;
-      font-size: 0.88rem;
-      font-weight: 700;
-      white-space: nowrap;
-      pointer-events: none;
-      z-index: 200;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-      transform: translateX(-50%);
-      animation: bubbleFloat 1.2s ease-out forwards;
+      position:fixed; background:#fff; border-radius:18px; padding:8px 14px;
+      font-family:inherit; font-size:.88rem; font-weight:700;
+      white-space:nowrap; pointer-events:none; z-index:200;
+      box-shadow:0 4px 16px rgba(0,0,0,.13);
+      transform:translateX(-50%);
+      animation:bubbleFloat 1.2s ease-out forwards;
     }
     .speech-bubble::after {
-      content: '';
-      position: absolute;
-      bottom: -8px;
-      left: 50%;
-      transform: translateX(-50%);
-      border-width: 8px 7px 0;
-      border-style: solid;
-      border-left-color: transparent;
-      border-right-color: transparent;
+      content:''; position:absolute; bottom:-8px; left:50%;
+      transform:translateX(-50%);
+      border-width:8px 7px 0; border-style:solid;
+      border-left-color:transparent; border-right-color:transparent;
     }
-    .speech-bubble.praise-bubble {
-      color: #d4608a;
-      border: 2px solid #f4a0c4;
-    }
-    .speech-bubble.praise-bubble::after { border-top-color: #f4a0c4; }
-    .speech-bubble.angry-bubble {
-      color: #c0242c;
-      border: 2px solid #ff4444;
-    }
-    .speech-bubble.angry-bubble::after { border-top-color: #ff4444; }
-
+    .speech-bubble.praise-bubble { color:#d4608a; border:2px solid #f4a0c4; }
+    .speech-bubble.praise-bubble::after { border-top-color:#f4a0c4; }
+    .speech-bubble.angry-bubble  { color:#c0242c; border:2px solid #ff4444; }
+    .speech-bubble.angry-bubble::after  { border-top-color:#ff4444; }
     @keyframes bubbleFloat {
-      0%   { opacity: 0; transform: translateX(-50%) translateY(0px)   scale(0.7); }
-      15%  { opacity: 1; transform: translateX(-50%) translateY(-10px)  scale(1.05); }
-      30%  { opacity: 1; transform: translateX(-50%) translateY(-14px)  scale(1); }
-      80%  { opacity: 1; transform: translateX(-50%) translateY(-50px)  scale(1); }
-      100% { opacity: 0; transform: translateX(-50%) translateY(-70px)  scale(0.9); }
-    }
-
-    /* ── Floating emojis (global) ─────────────────── */
-    .floating-emojis {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: 50;
-    }
-    .emoji-particle {
-      position: absolute;
-      font-size: 1.6rem;
-      pointer-events: none;
-      animation: floatUp 1.1s ease-out forwards;
-    }
-    @keyframes floatUp {
-      0%   { opacity: 1; transform: translateY(0)      scale(1); }
-      100% { opacity: 0; transform: translateY(-160px) scale(0.6); }
-    }
-
-    /* ── Reset button ─────────────────────────────── */
-    .reset-btn {
-      margin-top: 28px;
-      padding: 11px 36px;
-      background: #fff;
-      border: 2px solid #f4a0c4;
-      border-radius: 50px;
-      font-family: inherit;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #d4608a;
-      cursor: pointer;
-      touch-action: manipulation;
-      -webkit-tap-highlight-color: transparent;
-      box-shadow: 0 2px 10px rgba(210,100,140,0.12);
-      transition: all 0.18s ease;
-      user-select: none;
-    }
-    .reset-btn:hover {
-      background: #ffe8f4;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 16px rgba(210,100,140,0.2);
+      0%  { opacity:0; transform:translateX(-50%) translateY(0)    scale(.7); }
+      15% { opacity:1; transform:translateX(-50%) translateY(-12px) scale(1.05); }
+      30% { opacity:1; transform:translateX(-50%) translateY(-16px) scale(1); }
+      80% { opacity:1; transform:translateX(-50%) translateY(-60px) scale(1); }
+      100%{ opacity:0; transform:translateX(-50%) translateY(-80px) scale(.9); }
     }
 
     /* ── Status text ──────────────────────────────── */
     .status-text {
-      font-size: 0.65rem;
-      color: #d4608a;
-      font-weight: 600;
-      text-align: center;
-      margin-top: 4px;
-      opacity: 0.75;
-      min-width: 78px;
-      transition: color 0.3s ease;
-      user-select: none;
+      font-size:.65rem; color:#d4608a; font-weight:600;
+      text-align:center; margin-top:4px; opacity:.75;
+      min-width:78px; transition:color .3s; user-select:none;
     }
-    body.mode-spank .status-text { color: #c06030; }
-    body.mode-scold .status-text { color: #b02040; }
+    body.mode-spank .status-text { color:#c06030; }
+    body.mode-scold .status-text { color:#b02040; }
+
+    /* ── Reset button ─────────────────────────────── */
+    .reset-btn {
+      margin-top:24px; padding:11px 36px; background:#fff;
+      border:2px solid #f4a0c4; border-radius:50px;
+      font-family:inherit; font-size:1rem; font-weight:700; color:#d4608a;
+      cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent;
+      box-shadow:0 2px 10px rgba(210,100,140,.12); transition:all .18s ease; user-select:none;
+    }
+    .reset-btn:hover { background:#ffe8f4; transform:translateY(-2px); box-shadow:0 4px 16px rgba(210,100,140,.2); }
+
+    /* ── Message editor ───────────────────────────── */
+    .editor-wrap {
+      width:100%; max-width:680px; margin-top:20px;
+    }
+    .editor-toggle {
+      display:block; width:100%; padding:10px 18px;
+      background:#fff; border:1.5px solid #f9c6dc; border-radius:14px;
+      font-family:inherit; font-size:.9rem; font-weight:700; color:#d4608a;
+      cursor:pointer; text-align:center;
+      box-shadow:0 2px 8px rgba(210,100,140,.1);
+      touch-action:manipulation; transition:all .2s;
+    }
+    .editor-toggle:hover { background:#fff0f8; }
+    .editor-body {
+      display:none; margin-top:10px; background:#fff;
+      border:1.5px solid #f9c6dc; border-radius:16px;
+      padding:16px; box-shadow:0 4px 16px rgba(210,100,140,.1);
+    }
+    .editor-body.open { display:block; }
+    .editor-tabs { display:flex; gap:8px; margin-bottom:14px; }
+    .editor-tab {
+      flex:1; padding:8px; background:#fff0f8; border:1.5px solid #f9c6dc;
+      border-radius:10px; font-family:inherit; font-size:.82rem; font-weight:700;
+      color:#d4608a; cursor:pointer; transition:all .18s; touch-action:manipulation;
+    }
+    .editor-tab.active { background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff; border-color:transparent; }
+    .editor-panel { display:none; }
+    .editor-panel.active { display:block; }
+    .editor-panel textarea {
+      width:100%; height:130px; padding:10px 12px; resize:vertical;
+      border:1.5px solid #f9c6dc; border-radius:10px;
+      font-family:inherit; font-size:.85rem; color:#444; line-height:1.6;
+      outline:none; transition:border-color .2s;
+    }
+    .editor-panel textarea:focus { border-color:#f06090; }
+    .editor-actions {
+      display:flex; gap:8px; margin-top:10px; justify-content:flex-end;
+    }
+    .btn-save, .btn-restore {
+      padding:8px 18px; border-radius:50px; font-family:inherit;
+      font-size:.82rem; font-weight:700; cursor:pointer;
+      touch-action:manipulation; transition:all .18s;
+    }
+    .btn-save {
+      background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff; border:none;
+      box-shadow:0 2px 10px rgba(240,96,144,.3);
+    }
+    .btn-save:hover { box-shadow:0 4px 16px rgba(240,96,144,.45); transform:translateY(-1px); }
+    .btn-restore {
+      background:#fff; border:1.5px solid #f9c6dc; color:#d4608a;
+    }
+    .btn-restore:hover { background:#fff0f8; }
+
+    /* ── Toast ────────────────────────────────────── */
+    .toast {
+      position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(20px);
+      background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff;
+      padding:10px 24px; border-radius:50px; font-size:.9rem; font-weight:700;
+      box-shadow:0 4px 20px rgba(240,96,144,.4); pointer-events:none;
+      opacity:0; transition:opacity .25s, transform .25s; z-index:300;
+      white-space:nowrap;
+    }
+    .toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
 
     /* ── Responsive ───────────────────────────────── */
-    @media (max-width: 500px) {
-      .main-area    { gap: 8px; }
-      .image-frame  { width: clamp(150px, 58vw, 280px); }
-      .stat-box     { min-width: 56px; padding: 10px 7px; }
-      .stat-box .value { font-size: 1.15rem; }
+    @media (max-width:600px) {
+      .main-area { gap:8px; }
+      .image-col { max-width:90vw; }
+      .stat-box  { min-width:56px; padding:10px 7px; }
+      .stat-box .value { font-size:1.15rem; }
+      .stat-box .label { font-size:.62rem; }
+    }
+    @media (max-width:400px) {
+      .stat-box { min-width:46px; padding:8px 5px; }
+      .stat-box .value { font-size:1rem; }
     }
   </style>
 </head>
@@ -459,18 +397,25 @@
   </div>
 
   <div class="main-area">
+    <!-- Left stat -->
     <div class="stat-box left">
       <div class="label">팡팡</div>
       <div class="value" id="count">0</div>
     </div>
 
-    <div class="image-frame" id="imageFrame">
-      <img src="hoo.png" alt="닥터후"
-           onerror="this.style.display='none';document.getElementById('placeholder').style.display='block'" />
-      <span class="placeholder" id="placeholder" style="display:none">🐾</span>
-      <div class="effect-overlay" id="effectOverlay"></div>
+    <!-- Center: gauge + image -->
+    <div class="image-col">
+      <div class="gauge-label" id="gaugeLabel">PRAISE 💕</div>
+      <div class="gauge-wrap"><div class="gauge-fill" id="gaugeFill"></div></div>
+      <div class="image-frame" id="imageFrame">
+        <img src="hoo.png" alt="닥터후"
+             onerror="this.style.display='none';document.getElementById('placeholder').style.display='block'" />
+        <span class="placeholder" id="placeholder" style="display:none">🐾</span>
+        <div class="effect-overlay" id="effectOverlay"></div>
+      </div>
     </div>
 
+    <!-- Right stat -->
     <div>
       <div class="stat-box right">
         <div class="label" id="statLabel">PRAISE 💕</div>
@@ -482,75 +427,126 @@
 
   <button class="reset-btn" id="resetBtn">🔄 리셋</button>
 
+  <!-- Message editor -->
+  <div class="editor-wrap">
+    <button class="editor-toggle" id="editorToggle">⚙️ 메시지 편집</button>
+    <div class="editor-body" id="editorBody">
+      <div class="editor-tabs">
+        <button class="editor-tab active" data-tab="praise">💖 잘했어요 메시지</button>
+        <button class="editor-tab"        data-tab="angry" >😡 혼내기 메시지</button>
+      </div>
+      <div class="editor-panel active" id="panel-praise">
+        <textarea id="ta-praise" placeholder="한 줄에 하나씩 입력하세요&#10;예) 닥터후님 맞팔해주세여&#10;맞팔맞팔 아자스!!"></textarea>
+      </div>
+      <div class="editor-panel" id="panel-angry">
+        <textarea id="ta-angry"  placeholder="한 줄에 하나씩 입력하세요&#10;예) 닥터후님 왜 맞팔안해주세요!"></textarea>
+      </div>
+      <div class="editor-actions">
+        <button class="btn-restore" id="btnRestore">↩️ 기본값 복원</button>
+        <button class="btn-save"    id="btnSave"   >💾 저장</button>
+      </div>
+    </div>
+  </div>
+
   <div class="floating-emojis" id="floatingEmojis"></div>
   <div class="flash" id="flash"></div>
+  <div class="toast" id="toast"></div>
 
   <script>
+    /* ── Default messages ─────────────────────────── */
+    const DEFAULT_PRAISE = [
+      '닥터후님 맞팔해주세여','맞팔맞팔 아자스!!','azas',
+      '후님 잘생겼어요!','아작스','맞팔',
+    ];
+    const DEFAULT_ANGRY = ['닥터후님 왜 맞팔안해주세요!'];
+
+    function loadMessages() {
+      try {
+        const p = JSON.parse(localStorage.getItem('praiseMessages'));
+        const a = JSON.parse(localStorage.getItem('angryMessages'));
+        praiseMessages = (Array.isArray(p) && p.length) ? p : [...DEFAULT_PRAISE];
+        angryMessages  = (Array.isArray(a) && a.length) ? a : [...DEFAULT_ANGRY];
+      } catch(_) {
+        praiseMessages = [...DEFAULT_PRAISE];
+        angryMessages  = [...DEFAULT_ANGRY];
+      }
+    }
+
+    let praiseMessages, angryMessages;
+    loadMessages();
+
     /* ── Mode config ──────────────────────────────── */
     const modes = {
       praise: {
         emojis:          ['💖','✨','🌸','💕','⭐','🎀'],
         impactParticles: ['✨','💖','🌸','⭐'],
-        flashColor:      'rgba(255,200,230,0.5)',
+        flashColor:      'rgba(255,200,230,.5)',
         statLabel:       'PRAISE 💕',
         statusText:      '칭찬중',
         overlayEmoji:    '💖',
         handEmoji:       '👋',
-        rippleColor:     'radial-gradient(circle,rgba(255,182,193,0.85) 0%,rgba(255,182,193,0.3) 50%,transparent 70%)',
-        shakeClass:      'squashing',
+        rippleColor:     'radial-gradient(circle,rgba(255,182,193,.85) 0%,rgba(255,182,193,.3) 50%,transparent 70%)',
+        shakeClass:      'anim-squash',
         vibrate:         50,
         soundType:       'praise',
         bubbleClass:     'praise-bubble',
         bubbleEmoji:     '💕',
+        particleCount:   4,
       },
       spank: {
         emojis:          ['🍑','💥','👋','🌟','😳'],
         impactParticles: ['💥','✨','🌟','🍑'],
-        flashColor:      'rgba(255,160,100,0.35)',
+        flashColor:      'rgba(255,160,100,.35)',
         statLabel:       '찰싹 🍑',
         statusText:      '찰싹중',
         overlayEmoji:    '💥',
         handEmoji:       '👋',
-        rippleColor:     'radial-gradient(circle,rgba(255,160,80,0.8) 0%,rgba(255,160,80,0.25) 50%,transparent 70%)',
-        shakeClass:      'shaking-normal',
+        rippleColor:     'radial-gradient(circle,rgba(255,160,80,.8) 0%,rgba(255,160,80,.25) 50%,transparent 70%)',
+        shakeClass:      'anim-shake-normal',
         vibrate:         80,
         soundType:       'spank',
         bubbleClass:     'praise-bubble',
         bubbleEmoji:     '🍑',
+        particleCount:   4,
       },
       scold: {
         emojis:          ['😡','⚡','🔥','💢','❗'],
         impactParticles: ['💥','⚡','🔥','💢','❗'],
-        flashColor:      'rgba(220,60,80,0.25)',
+        flashColor:      'rgba(220,60,80,.25)',
         statLabel:       '분노 LV',
         statusText:      '혼내는중',
         overlayEmoji:    '😡',
         handEmoji:       '👊',
-        rippleColor:     'radial-gradient(circle,rgba(255,68,68,0.85) 0%,rgba(255,68,68,0.3) 50%,transparent 70%)',
-        shakeClass:      'shaking-scold',
-        vibrate:         100,
+        rippleColor:     'radial-gradient(circle,rgba(255,68,68,.85) 0%,rgba(255,68,68,.3) 50%,transparent 70%)',
+        shakeClass:      'anim-shake-scold',
+        vibrate:         [0,100,50,100],
         soundType:       'scold',
         bubbleClass:     'angry-bubble',
         bubbleEmoji:     '😡',
+        particleCount:   6,
       },
     };
 
-    const praiseMessages = [
-      '닥터후님 맞팔해주세여',
-      '맞팔맞팔 아자스!!',
-      'azas',
-      '후님 잘생겼어요!',
-      '아작스',
-      '맞팔',
+    /* ── Gauge config ─────────────────────────────── */
+    const praiseGauge = [
+      { max:10,  label:'PRAISE 💕',    fill:'linear-gradient(90deg,#ffb6c1,#f9a8cc)', body:'',       frame:'' },
+      { max:25,  label:'LOVE 💖',      fill:'linear-gradient(90deg,#ff9ab8,#f06090)', body:'',       frame:'' },
+      { max:50,  label:'BIG LOVE 💗✨', fill:'linear-gradient(90deg,#ff7aaa,#e04080)', body:'',       frame:'' },
+      { max:9999,label:'MAX LOVE 🌸💝',fill:'linear-gradient(90deg,#ff4d94,#c0206a)', body:'',       frame:'' },
     ];
-    const angryMessages = [
-      '닥터후님 왜 맞팔안해주세요!',
+    const scoldGauge = [
+      { max:10,  label:'😊 살살~',     fill:'linear-gradient(90deg,#ffb6c1,#ff8fa0)', body:'',                 frame:'' },
+      { max:25,  label:'😠 분노 LV.1', fill:'linear-gradient(90deg,#ff9944,#ff6622)', body:'',                 frame:'rage-1' },
+      { max:50,  label:'😡 분노 LV.2', fill:'linear-gradient(90deg,#ff5533,#dd1111)', body:'',                 frame:'rage-2' },
+      { max:75,  label:'🤬 분노 LV.3', fill:'linear-gradient(90deg,#cc2200,#880000)', body:'mode-scold rage-3',frame:'rage-3' },
+      { max:99,  label:'🔥 분노 MAX!', fill:'linear-gradient(90deg,#660000,#110000)', body:'mode-scold rage-max',frame:'rage-max' },
+      { max:9999,label:'💀 닥터후 기절!',fill:'#111',                                body:'mode-scold rage-max',frame:'rage-max faint' },
     ];
 
     /* ── State ────────────────────────────────────── */
     let currentMode = 'praise';
     let count = 0;
-    let modeCount = { praise: 0, spank: 0, scold: 0 };
+    let modeCount = { praise:0, spank:0, scold:0 };
 
     /* ── DOM refs ─────────────────────────────────── */
     const countEl    = document.getElementById('count');
@@ -561,6 +557,9 @@
     const overlay    = document.getElementById('effectOverlay');
     const flash      = document.getElementById('flash');
     const floatArea  = document.getElementById('floatingEmojis');
+    const gaugeFill  = document.getElementById('gaugeFill');
+    const gaugeLabel = document.getElementById('gaugeLabel');
+    const toastEl    = document.getElementById('toast');
 
     /* ── Web Audio ────────────────────────────────── */
     let audioCtx = null;
@@ -570,35 +569,67 @@
     }
     function playSound(type) {
       try {
-        const ctx  = getAudioCtx();
-        const osc  = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.connect(gain);
-        gain.connect(ctx.destination);
+        const ctx = getAudioCtx(), osc = ctx.createOscillator(), gain = ctx.createGain();
+        osc.connect(gain); gain.connect(ctx.destination);
         const t = ctx.currentTime;
         if (type === 'praise') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(440, t);
-          osc.frequency.exponentialRampToValueAtTime(660, t + 0.12);
-          gain.gain.setValueAtTime(0.18, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
-          osc.start(t); osc.stop(t + 0.25);
+          osc.type='sine';
+          osc.frequency.setValueAtTime(440,t);
+          osc.frequency.exponentialRampToValueAtTime(660,t+.12);
+          gain.gain.setValueAtTime(.18,t);
+          gain.gain.exponentialRampToValueAtTime(.001,t+.25);
+          osc.start(t); osc.stop(t+.25);
         } else if (type === 'spank') {
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(180, t);
-          osc.frequency.exponentialRampToValueAtTime(60, t + 0.08);
-          gain.gain.setValueAtTime(0.35, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.12);
-          osc.start(t); osc.stop(t + 0.12);
+          osc.type='sawtooth';
+          osc.frequency.setValueAtTime(180,t);
+          osc.frequency.exponentialRampToValueAtTime(60,t+.08);
+          gain.gain.setValueAtTime(.35,t);
+          gain.gain.exponentialRampToValueAtTime(.001,t+.12);
+          osc.start(t); osc.stop(t+.12);
         } else {
-          osc.type = 'square';
-          osc.frequency.setValueAtTime(120, t);
-          osc.frequency.exponentialRampToValueAtTime(40, t + 0.15);
-          gain.gain.setValueAtTime(0.4, t);
-          gain.gain.exponentialRampToValueAtTime(0.001, t + 0.2);
-          osc.start(t); osc.stop(t + 0.2);
+          osc.type='square';
+          osc.frequency.setValueAtTime(120,t);
+          osc.frequency.exponentialRampToValueAtTime(40,t+.15);
+          gain.gain.setValueAtTime(.4,t);
+          gain.gain.exponentialRampToValueAtTime(.001,t+.2);
+          osc.start(t); osc.stop(t+.2);
         }
-      } catch (_) {}
+      } catch(_) {}
+    }
+
+    /* ── Gauge update ─────────────────────────────── */
+    function updateGauge() {
+      const n = modeCount[currentMode];
+      const pct = Math.min(n, 100);
+      gaugeFill.style.width = pct + '%';
+
+      if (currentMode === 'scold') {
+        const tier = scoldGauge.find(g => n <= g.max) || scoldGauge[scoldGauge.length-1];
+        gaugeLabel.textContent = tier.label;
+        gaugeFill.style.background = tier.fill;
+
+        // body class
+        document.body.classList.remove('rage-3','rage-max');
+        frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
+        if (tier.body)  tier.body.split(' ').forEach(c => c && document.body.classList.add(c));
+        if (tier.frame) tier.frame.split(' ').forEach(c => c && frame.classList.add(c));
+
+        // 100회 기절
+        if (n === 100) {
+          setTimeout(() => { frame.classList.add('faint'); }, 100);
+        }
+      } else if (currentMode === 'praise') {
+        const tier = praiseGauge.find(g => n <= g.max) || praiseGauge[praiseGauge.length-1];
+        gaugeLabel.textContent = tier.label;
+        gaugeFill.style.background = tier.fill;
+        frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
+        document.body.classList.remove('rage-3','rage-max');
+      } else {
+        gaugeLabel.textContent = '찰싹 🍑';
+        gaugeFill.style.background = 'linear-gradient(90deg,#ffb880,#e07040)';
+        frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
+        document.body.classList.remove('rage-3','rage-max');
+      }
     }
 
     /* ── Mode switching ───────────────────────────── */
@@ -606,9 +637,11 @@
       currentMode = mode;
       document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
       document.querySelector(`.mode-btn[data-mode="${mode}"]`).classList.add('active');
-      document.body.classList.remove('mode-spank', 'mode-scold');
-      if (mode !== 'praise') document.body.classList.add('mode-' + mode);
+      document.body.classList.remove('mode-spank','mode-scold','rage-3','rage-max');
+      if (mode !== 'praise') document.body.classList.add('mode-'+mode);
+      frame.classList.remove('rage-1','rage-2','rage-3','rage-max','faint');
       updateStatUI();
+      updateGauge();
     }
     document.querySelectorAll('.mode-btn').forEach(btn => {
       btn.addEventListener('click', () => switchMode(btn.dataset.mode));
@@ -619,36 +652,37 @@
       statLabel.textContent  = m.statLabel;
       statValue.textContent  = modeCount[currentMode];
       statusText.textContent = m.statusText;
+      countEl.textContent    = count;
     }
 
-    /* ── Touch / click unified handler ───────────── */
+    /* ── Interaction handler ──────────────────────── */
     function handleInteraction(clientX, clientY) {
       count++;
       modeCount[currentMode]++;
-      countEl.textContent = count;
       updateStatUI();
+      updateGauge();
 
       const m    = modes[currentMode];
       const rect = frame.getBoundingClientRect();
       const lx   = clientX - rect.left;
       const ly   = clientY - rect.top;
 
-      // 1. Shake / squash
-      frame.classList.remove('shaking-normal', 'shaking-scold', 'squashing');
+      // Shake / squash
+      frame.classList.remove('anim-shake-normal','anim-shake-scold','anim-squash');
       void frame.offsetWidth;
       frame.classList.add(m.shakeClass);
       frame.addEventListener('animationend', () => {
-        frame.classList.remove('shaking-normal', 'shaking-scold', 'squashing');
-      }, { once: true });
+        frame.classList.remove('anim-shake-normal','anim-shake-scold','anim-squash');
+      }, { once:true });
 
-      // 2. Ripple
+      // Ripple
       const ripple = document.createElement('div');
       ripple.className = 'click-ripple';
       ripple.style.cssText = `left:${lx}px;top:${ly}px;background:${m.rippleColor}`;
       frame.appendChild(ripple);
       setTimeout(() => ripple.remove(), 650);
 
-      // 3. Hand emoji
+      // Hand emoji
       const hand = document.createElement('span');
       hand.className = 'click-hand';
       hand.textContent = m.handEmoji;
@@ -656,45 +690,42 @@
       frame.appendChild(hand);
       setTimeout(() => hand.remove(), 350);
 
-      // 4. Impact particles
-      spawnImpactParticles(m.impactParticles, lx, ly, currentMode === 'scold' ? 6 : 4);
+      // Impact particles
+      spawnImpactParticles(m.impactParticles, lx, ly, m.particleCount);
 
-      // 5. Screen flash
+      // Screen flash
       flash.style.background = m.flashColor;
       flash.classList.remove('pop');
       void flash.offsetWidth;
       flash.classList.add('pop');
 
-      // 6. Overlay emoji
+      // Overlay emoji
       overlay.textContent = m.overlayEmoji;
       overlay.classList.remove('show');
       void overlay.offsetWidth;
       overlay.classList.add('show');
 
-      // 7. Floating emojis
+      // Floating emojis
       for (let i = 0; i < 4; i++) spawnEmoji(m.emojis, clientX, clientY);
 
-      // 8. Vibration
-      if (navigator.vibrate) navigator.vibrate(m.vibrate);
+      // Vibration
+      if (navigator.vibrate) {
+        navigator.vibrate(Array.isArray(m.vibrate) ? m.vibrate : [m.vibrate]);
+      }
 
-      // 9. Sound
+      // Sound
       playSound(m.soundType);
 
-      // 10. Speech bubble
+      // Speech bubble
       spawnBubble(m, clientX, clientY);
     }
 
-    // Click
-    frame.addEventListener('click', e => {
-      handleInteraction(e.clientX, e.clientY);
-    });
-
-    // Touch (prevent ghost click on mobile)
+    frame.addEventListener('click', e => handleInteraction(e.clientX, e.clientY));
     frame.addEventListener('touchstart', e => {
       e.preventDefault();
       const t = e.changedTouches[0];
       handleInteraction(t.clientX, t.clientY);
-    }, { passive: false });
+    }, { passive:false });
 
     /* ── Particle helpers ─────────────────────────── */
     function spawnImpactParticles(particles, lx, ly, n) {
@@ -702,13 +733,12 @@
         const el = document.createElement('span');
         el.className = 'impact-particle';
         el.textContent = particles[Math.floor(Math.random() * particles.length)];
-        el.style.left = lx + 'px';
-        el.style.top  = ly + 'px';
-        const angle = ((360 / n) * i + (Math.random() - 0.5) * 40) * (Math.PI / 180);
-        const dist  = 45 + Math.random() * 35;
+        el.style.left = lx + 'px'; el.style.top = ly + 'px';
+        const angle = ((360/n)*i + (Math.random()-.5)*40) * (Math.PI/180);
+        const dist  = 45 + Math.random()*40;
         el.style.setProperty('--fly-to',
-          `translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(0.4)`);
-        el.style.animationDelay = Math.random() * 0.06 + 's';
+          `translate(${Math.cos(angle)*dist}px,${Math.sin(angle)*dist}px) scale(.3)`);
+        el.style.animationDelay = Math.random()*.07+'s';
         frame.appendChild(el);
         setTimeout(() => el.remove(), 600);
       }
@@ -717,33 +747,80 @@
     function spawnEmoji(emojis, cx, cy) {
       const el = document.createElement('span');
       el.className = 'emoji-particle';
-      el.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      el.style.left = (cx + (Math.random() - 0.5) * 80) + 'px';
-      el.style.top  = (cy + (Math.random() - 0.5) * 40) + 'px';
-      el.style.animationDelay = Math.random() * 0.15 + 's';
+      el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      el.style.left = (cx+(Math.random()-.5)*90)+'px';
+      el.style.top  = (cy+(Math.random()-.5)*50)+'px';
+      el.style.animationDelay = Math.random()*.15+'s';
       floatArea.appendChild(el);
       setTimeout(() => el.remove(), 1300);
     }
 
     function spawnBubble(m, cx, cy) {
       const pool = m.bubbleClass === 'angry-bubble' ? angryMessages : praiseMessages;
-      const text = pool[Math.floor(Math.random() * pool.length)];
+      const text = pool[Math.floor(Math.random()*pool.length)];
       const el   = document.createElement('div');
-      el.className = 'speech-bubble ' + m.bubbleClass;
-      el.textContent = m.bubbleEmoji + ' ' + text;
-      el.style.left  = cx + 'px';
-      el.style.top   = (cy - 50) + 'px';
+      el.className = 'speech-bubble '+m.bubbleClass;
+      el.textContent = m.bubbleEmoji+' '+text;
+      el.style.left  = cx+'px';
+      el.style.top   = (cy-60)+'px';
       document.body.appendChild(el);
-      setTimeout(() => el.remove(), 1300);
+      setTimeout(() => el.remove(), 1350);
     }
 
     /* ── Reset ────────────────────────────────────── */
     document.getElementById('resetBtn').addEventListener('click', () => {
       count = 0;
-      modeCount = { praise: 0, spank: 0, scold: 0 };
-      countEl.textContent = 0;
+      modeCount = { praise:0, spank:0, scold:0 };
       switchMode('praise');
     });
+
+    /* ── Message editor ───────────────────────────── */
+    document.getElementById('editorToggle').addEventListener('click', () => {
+      const body = document.getElementById('editorBody');
+      const open = body.classList.toggle('open');
+      document.getElementById('editorToggle').textContent = open ? '⚙️ 메시지 편집 ▲' : '⚙️ 메시지 편집';
+      if (open) {
+        document.getElementById('ta-praise').value = praiseMessages.join('\n');
+        document.getElementById('ta-angry').value  = angryMessages.join('\n');
+      }
+    });
+
+    document.querySelectorAll('.editor-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-'+tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    document.getElementById('btnSave').addEventListener('click', () => {
+      const pLines = document.getElementById('ta-praise').value
+        .split('\n').map(s=>s.trim()).filter(Boolean);
+      const aLines = document.getElementById('ta-angry').value
+        .split('\n').map(s=>s.trim()).filter(Boolean);
+      praiseMessages = pLines.length ? pLines : [...DEFAULT_PRAISE];
+      angryMessages  = aLines.length ? aLines : [...DEFAULT_ANGRY];
+      localStorage.setItem('praiseMessages', JSON.stringify(praiseMessages));
+      localStorage.setItem('angryMessages',  JSON.stringify(angryMessages));
+      showToast('저장됐어요! ✨');
+    });
+
+    document.getElementById('btnRestore').addEventListener('click', () => {
+      praiseMessages = [...DEFAULT_PRAISE];
+      angryMessages  = [...DEFAULT_ANGRY];
+      localStorage.removeItem('praiseMessages');
+      localStorage.removeItem('angryMessages');
+      document.getElementById('ta-praise').value = DEFAULT_PRAISE.join('\n');
+      document.getElementById('ta-angry').value  = DEFAULT_ANGRY.join('\n');
+      showToast('기본값으로 복원됐어요! 🌸');
+    });
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add('show');
+      setTimeout(() => toastEl.classList.remove('show'), 1600);
+    }
 
     /* ── Init ─────────────────────────────────────── */
     switchMode('praise');
