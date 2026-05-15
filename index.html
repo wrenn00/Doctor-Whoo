@@ -110,7 +110,7 @@
     /* ── Image column (frame + gauge) ────────────── */
     .image-col {
       display: flex; flex-direction: column; align-items: center;
-      gap: 10px; flex: 1; max-width: 600px; min-width: 0;
+      gap: 10px; flex: 1; max-width: 480px; min-width: 0;
     }
 
     /* ── Gauge bar ───────────────────────────────── */
@@ -817,8 +817,8 @@
     }
 
     function spawnBubble(m, cx, cy) {
-      const poolMap = { slap: slapMessages, angry: angryMessages };
-      const pool = m.msgPool ? (poolMap[m.msgPool] || []) : praiseMessages;
+      const poolMap = { praise: praiseMessages, slap: slapMessages, angry: angryMessages };
+      const pool = poolMap[m.msgPool] || [];
       if (!pool.length) return;
       const text = pool[Math.floor(Math.random()*pool.length)];
       const el   = document.createElement('div');
