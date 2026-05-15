@@ -277,9 +277,11 @@
       border-width:8px 7px 0; border-style:solid;
       border-left-color:transparent; border-right-color:transparent;
     }
-    .speech-bubble.praise-bubble { color:#d4608a; border:2px solid #f4a0c4; }
+    .speech-bubble.praise-bubble { color:#d4608a; border:2px solid #f4a0c4; background:#fff0f3; }
     .speech-bubble.praise-bubble::after { border-top-color:#f4a0c4; }
-    .speech-bubble.angry-bubble  { color:#c0242c; border:2px solid #ff4444; }
+    .speech-bubble.slap-bubble   { color:#e07a4a; border:2px solid #ffb088; background:#fff4ed; box-shadow:0 4px 12px rgba(255,176,136,.3); }
+    .speech-bubble.slap-bubble::after   { border-top-color:#ffb088; }
+    .speech-bubble.angry-bubble  { color:#c0242c; border:2px solid #ff4444; background:#ffe0e0; }
     .speech-bubble.angry-bubble::after  { border-top-color:#ff4444; }
     @keyframes bubbleFloat {
       0%  { opacity:0; transform:translateX(-50%) translateY(0)    scale(.7); }
@@ -439,7 +441,7 @@
 </head>
 <body>
 
-  <h1>🩺 닥터후 팡팡</h1>
+  <h1>닥터후 팡팡</h1>
 
   <div class="mode-buttons">
     <button class="mode-btn praise" data-mode="praise">💖 잘했어요</button>
@@ -564,7 +566,7 @@
         shakeClass:      'anim-shake-normal',
         vibrate:         80,
         soundType:       'spank',
-        bubbleClass:     'praise-bubble',
+        bubbleClass:     'slap-bubble',
         bubbleEmoji:     '🍑',
         msgPool:         'slap',
         particleCount:   4,
