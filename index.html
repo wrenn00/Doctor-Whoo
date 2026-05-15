@@ -309,9 +309,7 @@
     .reset-btn:hover { background:#ffe8f4; transform:translateY(-2px); box-shadow:0 4px 16px rgba(210,100,140,.2); }
 
     /* ── Message editor ───────────────────────────── */
-    .editor-wrap {
-      width:100%; max-width:680px; margin-top:20px;
-    }
+    .editor-wrap { width:100%; max-width:680px; margin-top:20px; }
     .editor-toggle {
       display:block; width:100%; padding:10px 18px;
       background:#fff; border:1.5px solid #f9c6dc; border-radius:14px;
@@ -327,26 +325,79 @@
       padding:16px; box-shadow:0 4px 16px rgba(210,100,140,.1);
     }
     .editor-body.open { display:block; }
-    .editor-tabs { display:flex; gap:8px; margin-bottom:14px; }
+
+    /* tabs */
+    .editor-tabs { display:flex; gap:6px; margin-bottom:12px; }
     .editor-tab {
-      flex:1; padding:8px; background:#fff0f8; border:1.5px solid #f9c6dc;
-      border-radius:10px; font-family:inherit; font-size:.82rem; font-weight:700;
+      flex:1; padding:7px 4px; background:#fff0f8; border:1.5px solid #f9c6dc;
+      border-radius:10px; font-family:inherit; font-size:.75rem; font-weight:700;
       color:#d4608a; cursor:pointer; transition:all .18s; touch-action:manipulation;
+      text-align:center; line-height:1.3;
     }
     .editor-tab.active { background:linear-gradient(135deg,#f9a8cc,#f06090); color:#fff; border-color:transparent; }
     .editor-panel { display:none; }
     .editor-panel.active { display:block; }
-    .editor-panel textarea {
-      width:100%; height:130px; padding:10px 12px; resize:vertical;
-      border:1.5px solid #f9c6dc; border-radius:10px;
-      font-family:inherit; font-size:.85rem; color:#444; line-height:1.6;
-      outline:none; transition:border-color .2s;
+
+    /* hint text */
+    .panel-hint {
+      font-size:.72rem; color:#999; margin-bottom:12px; padding: 0 2px;
     }
-    .editor-panel textarea:focus { border-color:#f06090; }
+
+    /* card list */
+    .msg-list { display:flex; flex-direction:column; gap:8px; min-height:10px; }
+    .msg-card {
+      background:#fff5f7; border:1px solid #ffd6e0; border-radius:12px;
+      padding:10px 12px; display:flex; flex-direction:column; gap:6px;
+      animation:slideDown .2s ease;
+    }
+    @keyframes slideDown {
+      from { opacity:0; transform:translateY(-8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .msg-card-header {
+      display:flex; align-items:center; justify-content:space-between;
+    }
+    .msg-card-num {
+      font-size:.7rem; font-weight:700; color:#c0608a; opacity:.75;
+    }
+    .msg-card-del {
+      background:none; border:none; cursor:pointer; font-size:1rem;
+      line-height:1; padding:2px 4px; border-radius:6px;
+      color:#ccc; transition:color .15s, background .15s;
+      touch-action:manipulation;
+    }
+    .msg-card-del:hover { color:#e03030; background:#ffe0e0; }
+    .msg-card input {
+      width:100%; padding:7px 10px;
+      border:1.5px solid #ffd6e0; border-radius:8px;
+      font-family:inherit; font-size:.85rem; color:#444;
+      outline:none; background:#fff;
+      transition:border-color .18s;
+    }
+    .msg-card input:focus { border-color:#f06090; }
+
+    /* empty state */
+    .msg-empty {
+      text-align:center; padding:28px 16px; color:#bbb;
+      font-size:.85rem; line-height:1.7;
+    }
+    .msg-empty .empty-icon { font-size:2rem; display:block; margin-bottom:8px; }
+
+    /* add button */
+    .btn-add-msg {
+      display:block; width:100%; margin-top:8px; padding:10px;
+      background:#fff; border:2px dashed #f9c6dc; border-radius:12px;
+      font-family:inherit; font-size:.85rem; font-weight:700; color:#d4608a;
+      cursor:pointer; text-align:center; transition:all .18s;
+      touch-action:manipulation;
+    }
+    .btn-add-msg:hover { background:#fff5f8; border-color:#f06090; }
+
+    /* actions */
     .editor-actions {
-      display:flex; gap:8px; margin-top:10px; justify-content:flex-end;
+      display:flex; gap:8px; margin-top:14px; justify-content:flex-end;
     }
-    .btn-save, .btn-restore {
+    .btn-save, .btn-clear {
       padding:8px 18px; border-radius:50px; font-family:inherit;
       font-size:.82rem; font-weight:700; cursor:pointer;
       touch-action:manipulation; transition:all .18s;
@@ -356,10 +407,10 @@
       box-shadow:0 2px 10px rgba(240,96,144,.3);
     }
     .btn-save:hover { box-shadow:0 4px 16px rgba(240,96,144,.45); transform:translateY(-1px); }
-    .btn-restore {
+    .btn-clear {
       background:#fff; border:1.5px solid #f9c6dc; color:#d4608a;
     }
-    .btn-restore:hover { background:#fff0f8; }
+    .btn-clear:hover { background:#fff0f8; }
 
     /* ── Toast ────────────────────────────────────── */
     .toast {
@@ -432,18 +483,32 @@
     <button class="editor-toggle" id="editorToggle">⚙️ 메시지 편집</button>
     <div class="editor-body" id="editorBody">
       <div class="editor-tabs">
-        <button class="editor-tab active" data-tab="praise">💖 잘했어요 메시지</button>
-        <button class="editor-tab"        data-tab="angry" >😡 혼내기 메시지</button>
+        <button class="editor-tab active" data-tab="praise">💖 잘했어요</button>
+        <button class="editor-tab"        data-tab="slap"  >🍑 찰싹!</button>
+        <button class="editor-tab"        data-tab="angry" >😡 혼내기</button>
       </div>
+
       <div class="editor-panel active" id="panel-praise">
-        <textarea id="ta-praise" placeholder="한 줄에 하나씩 입력하세요&#10;예) 닥터후님 맞팔해주세여&#10;맞팔맞팔 아자스!!"></textarea>
+        <p class="panel-hint">닥터후를 칭찬할 때 랜덤으로 나올 메시지예요 ✨</p>
+        <div class="msg-list" id="list-praise"></div>
+        <button class="btn-add-msg" data-target="praise">➕ 메시지 추가하기</button>
       </div>
+
+      <div class="editor-panel" id="panel-slap">
+        <p class="panel-hint">찰싹 때릴 때 랜덤으로 나올 메시지예요 🍑</p>
+        <div class="msg-list" id="list-slap"></div>
+        <button class="btn-add-msg" data-target="slap">➕ 메시지 추가하기</button>
+      </div>
+
       <div class="editor-panel" id="panel-angry">
-        <textarea id="ta-angry"  placeholder="한 줄에 하나씩 입력하세요&#10;예) 닥터후님 왜 맞팔안해주세요!"></textarea>
+        <p class="panel-hint">혼낼 때 랜덤으로 나올 메시지예요 🔥</p>
+        <div class="msg-list" id="list-angry"></div>
+        <button class="btn-add-msg" data-target="angry">➕ 메시지 추가하기</button>
       </div>
+
       <div class="editor-actions">
-        <button class="btn-restore" id="btnRestore">↩️ 기본값 복원</button>
-        <button class="btn-save"    id="btnSave"   >💾 저장</button>
+        <button class="btn-clear" id="btnClear">🗑️ 전체 삭제</button>
+        <button class="btn-save"  id="btnSave" >💾 저장</button>
       </div>
     </div>
   </div>
@@ -453,26 +518,19 @@
   <div class="toast" id="toast"></div>
 
   <script>
-    /* ── Default messages ─────────────────────────── */
-    const DEFAULT_PRAISE = [
-      '닥터후님 맞팔해주세여','맞팔맞팔 아자스!!','azas',
-      '후님 잘생겼어요!','아작스','맞팔',
-    ];
-    const DEFAULT_ANGRY = ['닥터후님 왜 맞팔안해주세요!'];
+    /* ── Messages (localStorage, start empty) ────── */
+    let praiseMessages = [], slapMessages = [], angryMessages = [];
 
     function loadMessages() {
       try {
         const p = JSON.parse(localStorage.getItem('praiseMessages'));
+        const s = JSON.parse(localStorage.getItem('slapMessages'));
         const a = JSON.parse(localStorage.getItem('angryMessages'));
-        praiseMessages = (Array.isArray(p) && p.length) ? p : [...DEFAULT_PRAISE];
-        angryMessages  = (Array.isArray(a) && a.length) ? a : [...DEFAULT_ANGRY];
-      } catch(_) {
-        praiseMessages = [...DEFAULT_PRAISE];
-        angryMessages  = [...DEFAULT_ANGRY];
-      }
+        praiseMessages = Array.isArray(p) ? p : [];
+        slapMessages   = Array.isArray(s) ? s : [];
+        angryMessages  = Array.isArray(a) ? a : [];
+      } catch(_) {}
     }
-
-    let praiseMessages, angryMessages;
     loadMessages();
 
     /* ── Mode config ──────────────────────────────── */
@@ -491,6 +549,7 @@
         soundType:       'praise',
         bubbleClass:     'praise-bubble',
         bubbleEmoji:     '💕',
+        msgPool:         'praise',
         particleCount:   4,
       },
       spank: {
@@ -507,6 +566,7 @@
         soundType:       'spank',
         bubbleClass:     'praise-bubble',
         bubbleEmoji:     '🍑',
+        msgPool:         'slap',
         particleCount:   4,
       },
       scold: {
@@ -523,6 +583,7 @@
         soundType:       'scold',
         bubbleClass:     'angry-bubble',
         bubbleEmoji:     '😡',
+        msgPool:         'angry',
         particleCount:   6,
       },
     };
@@ -756,7 +817,9 @@
     }
 
     function spawnBubble(m, cx, cy) {
-      const pool = m.bubbleClass === 'angry-bubble' ? angryMessages : praiseMessages;
+      const poolMap = { slap: slapMessages, angry: angryMessages };
+      const pool = m.msgPool ? (poolMap[m.msgPool] || []) : praiseMessages;
+      if (!pool.length) return;
       const text = pool[Math.floor(Math.random()*pool.length)];
       const el   = document.createElement('div');
       el.className = 'speech-bubble '+m.bubbleClass;
@@ -775,45 +838,132 @@
     });
 
     /* ── Message editor ───────────────────────────── */
+
+    // 현재 편집 중인 탭
+    let activeEditorTab = 'praise';
+
+    // 탭 데이터 맵
+    const tabData = {
+      praise: { get: () => praiseMessages, set: v => { praiseMessages = v; }, key: 'praiseMessages' },
+      slap:   { get: () => slapMessages,   set: v => { slapMessages   = v; }, key: 'slapMessages'   },
+      angry:  { get: () => angryMessages,  set: v => { angryMessages  = v; }, key: 'angryMessages'  },
+    };
+
+    // 카드 하나 생성
+    function createCard(listEl, value, tabKey) {
+      const card = document.createElement('div');
+      card.className = 'msg-card';
+
+      const header = document.createElement('div');
+      header.className = 'msg-card-header';
+
+      const num = document.createElement('span');
+      num.className = 'msg-card-num';
+
+      const del = document.createElement('button');
+      del.className = 'msg-card-del';
+      del.textContent = '🗑️';
+      del.title = '삭제';
+      del.addEventListener('click', () => {
+        card.style.transition = 'opacity .15s';
+        card.style.opacity = '0';
+        setTimeout(() => { card.remove(); renumberList(listEl); }, 160);
+      });
+
+      header.appendChild(num);
+      header.appendChild(del);
+
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = value;
+      input.placeholder = '예: 닥터후님 맞팔해주세여';
+
+      card.appendChild(header);
+      card.appendChild(input);
+      listEl.appendChild(card);
+      renumberList(listEl);
+      return input;
+    }
+
+    function renumberList(listEl) {
+      listEl.querySelectorAll('.msg-card-num').forEach((el, i) => {
+        el.textContent = '💬 메시지 ' + (i + 1);
+      });
+    }
+
+    function renderEmpty(listEl) {
+      const el = document.createElement('div');
+      el.className = 'msg-empty';
+      el.innerHTML = '<span class="empty-icon">💌</span>아직 메시지가 없어요<br>아래 버튼을 눌러 추가해보세요!';
+      listEl.appendChild(el);
+    }
+
+    function renderList(tabKey) {
+      const listEl = document.getElementById('list-' + tabKey);
+      listEl.innerHTML = '';
+      const msgs = tabData[tabKey].get();
+      if (!msgs.length) { renderEmpty(listEl); return; }
+      msgs.forEach(msg => createCard(listEl, msg, tabKey));
+    }
+
+    function getListValues(tabKey) {
+      const listEl = document.getElementById('list-' + tabKey);
+      return [...listEl.querySelectorAll('.msg-card input')]
+        .map(i => i.value.trim())
+        .filter(Boolean);
+    }
+
+    // 토글
     document.getElementById('editorToggle').addEventListener('click', () => {
       const body = document.getElementById('editorBody');
       const open = body.classList.toggle('open');
       document.getElementById('editorToggle').textContent = open ? '⚙️ 메시지 편집 ▲' : '⚙️ 메시지 편집';
-      if (open) {
-        document.getElementById('ta-praise').value = praiseMessages.join('\n');
-        document.getElementById('ta-angry').value  = angryMessages.join('\n');
-      }
+      if (open) { renderList('praise'); renderList('slap'); renderList('angry'); }
     });
 
+    // 탭 전환
     document.querySelectorAll('.editor-tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.editor-tab').forEach(t => t.classList.remove('active'));
         document.querySelectorAll('.editor-panel').forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
-        document.getElementById('panel-'+tab.dataset.tab).classList.add('active');
+        activeEditorTab = tab.dataset.tab;
+        document.getElementById('panel-' + activeEditorTab).classList.add('active');
       });
     });
 
+    // 메시지 추가
+    document.querySelectorAll('.btn-add-msg').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tabKey = btn.dataset.target;
+        const listEl = document.getElementById('list-' + tabKey);
+        // 빈 상태 안내 제거
+        const empty = listEl.querySelector('.msg-empty');
+        if (empty) empty.remove();
+        const input = createCard(listEl, '', tabKey);
+        input.focus();
+        listEl.scrollTop = listEl.scrollHeight;
+      });
+    });
+
+    // 저장
     document.getElementById('btnSave').addEventListener('click', () => {
-      const pLines = document.getElementById('ta-praise').value
-        .split('\n').map(s=>s.trim()).filter(Boolean);
-      const aLines = document.getElementById('ta-angry').value
-        .split('\n').map(s=>s.trim()).filter(Boolean);
-      praiseMessages = pLines.length ? pLines : [...DEFAULT_PRAISE];
-      angryMessages  = aLines.length ? aLines : [...DEFAULT_ANGRY];
-      localStorage.setItem('praiseMessages', JSON.stringify(praiseMessages));
-      localStorage.setItem('angryMessages',  JSON.stringify(angryMessages));
+      ['praise','slap','angry'].forEach(tabKey => {
+        const vals = getListValues(tabKey);
+        const deduped = [...new Set(vals)];
+        tabData[tabKey].set(deduped);
+        localStorage.setItem(tabData[tabKey].key, JSON.stringify(deduped));
+        renderList(tabKey);
+      });
       showToast('저장됐어요! ✨');
     });
 
-    document.getElementById('btnRestore').addEventListener('click', () => {
-      praiseMessages = [...DEFAULT_PRAISE];
-      angryMessages  = [...DEFAULT_ANGRY];
-      localStorage.removeItem('praiseMessages');
-      localStorage.removeItem('angryMessages');
-      document.getElementById('ta-praise').value = DEFAULT_PRAISE.join('\n');
-      document.getElementById('ta-angry').value  = DEFAULT_ANGRY.join('\n');
-      showToast('기본값으로 복원됐어요! 🌸');
+    // 전체 삭제 (현재 탭)
+    document.getElementById('btnClear').addEventListener('click', () => {
+      tabData[activeEditorTab].set([]);
+      localStorage.removeItem(tabData[activeEditorTab].key);
+      renderList(activeEditorTab);
+      showToast('삭제됐어요 🗑️');
     });
 
     function showToast(msg) {
