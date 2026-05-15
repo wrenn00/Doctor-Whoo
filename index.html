@@ -266,7 +266,7 @@
     .speech-bubble {
       position:fixed; background:#fff; border-radius:18px; padding:8px 14px;
       font-family:inherit; font-size:.88rem; font-weight:700;
-      white-space:nowrap; pointer-events:none; z-index:200;
+      white-space:nowrap; pointer-events:none; z-index:9999;
       box-shadow:0 4px 16px rgba(0,0,0,.13);
       transform:translateX(-50%);
       animation:bubbleFloat 1.2s ease-out forwards;
@@ -602,6 +602,10 @@
   <div class="flash" id="flash"></div>
   <div class="toast" id="toast"></div>
 
+  <!-- 모바일 디버깅 콘솔 (테스트 후 제거 가능) -->
+  <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+  <script>eruda.init();</script>
+
   <script>
     /* ── Messages (localStorage, start empty) ────── */
     let praiseMessages = [], slapMessages = [], angryMessages = [];
@@ -866,11 +870,40 @@
       spawnBubble(m, clientX, clientY);
     }
 
-    frame.addEventListener('click', e => handleInteraction(e.clientX, e.clientY));
+    /* ── Debug console.log ────────────────────────── */
+    function dbg(clientX, clientY) {
+      const pool = { praise:praiseMessages, slap:slapMessages, angry:angryMessages };
+      const msgs = pool[modes[currentMode].msgPool] || [];
+      console.log('[팡팡]', {
+        mode: currentMode,
+        coord: { x: Math.round(clientX), y: Math.round(clientY) },
+        msgCount: msgs.length,
+        sample: msgs[0] ?? '(없음)',
+      });
+    }
+
+    // ghost click 방지: touch 후 350ms 이내 click 무시
+    let lastTouchEnd = 0;
+
+    frame.addEventListener('click', e => {
+      if (Date.now() - lastTouchEnd < 350) return;
+      dbg(e.clientX, e.clientY);
+      handleInteraction(e.clientX, e.clientY);
+    });
+
+    // touchend: 스크롤 중 오발동 없이 실제 탭만 감지
+    frame.addEventListener('touchend', e => {
+      e.preventDefault();
+      lastTouchEnd = Date.now();
+      const t = e.changedTouches[0];
+      if (!t) return;
+      dbg(t.clientX, t.clientY);
+      handleInteraction(t.clientX, t.clientY);
+    }, { passive:false });
+
+    // touchstart에서 스크롤 중 발동 방지만 담당 (처리는 touchend에서)
     frame.addEventListener('touchstart', e => {
       e.preventDefault();
-      const t = e.changedTouches[0];
-      handleInteraction(t.clientX, t.clientY);
     }, { passive:false });
 
     /* ── Particle helpers ─────────────────────────── */
